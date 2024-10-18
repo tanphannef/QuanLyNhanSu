@@ -2,8 +2,8 @@
 
 int main()
 {
-	date d;
-	d.nhapDate();
-	d.xuatDate();
+	NodeNhanVien* nv = NULL;
+	nv = CreateNode();
+	xuatNhanVien(nv);
 	return 0;
 }

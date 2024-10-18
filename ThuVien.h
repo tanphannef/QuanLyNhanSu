@@ -2,6 +2,8 @@
 #include <string>
 using namespace std;
 
+const int MAX = 10;
+
 struct date
 {
 	int day = 0;
@@ -137,28 +139,93 @@ struct date
 	}
 };
 
-struct user
+struct User
 {
 	string id = "";
 	string hoten = "";
 	string sdt = "";
-	string ccd = "";
+	string cccd = "";
 	date ngayVaoLam;
 	string chucvu = "";
 	bool gioitinh = true;
+
+	void nhapUser()
+	{
+		cout << "Nhap id: ";
+		getline(cin, id);
+		cout << "Nhap hoten: ";
+		getline(cin, hoten);
+		cout << "Nhap sdt: ";
+		getline(cin, sdt);
+		cout << "Nhap CCCD: ";
+		getline(cin, cccd);
+		cout << "Nhap ngay: " << endl;
+		ngayVaoLam.nhapDate();
+		cin.ignore();
+		cout << "Nhap chuc cu: ";
+		getline(cin, chucvu);
+		cout << "Nhap gioi tinh(1.nam/0.nu): ";
+		cin >> gioitinh;
+	}
+
+	void xuatUser()
+	{
+		cout << "ID: " << id << endl;
+		cout << "Hoten: " << hoten << endl;
+		cout << "SDT: " << sdt << endl;
+		cout << "CCCD: " << cccd << endl;
+		cout << "Ngay vao lam: ";
+		ngayVaoLam.xuatDate();
+		cout << endl;
+		cout << "Chuc vu: " << chucvu << endl;
+		cout << "Gioi tinh: " << gioitinh << endl;
+	}
 };
 
-struct bangCap
+struct BangCap
 {
 	string mabang = "";
 	string tenBangCap = "";
+
+	void nhapBangCap()
+	{
+		cin.ignore();
+		cout << "Nhap ma bang: ";
+		getline(cin, mabang);
+		cout << "Nhap ten bang cap: ";
+		getline(cin, tenBangCap);
+	}
+
+	void xuatBangCap()
+	{
+		cout << "Ma bang cap: " << mabang << endl;
+		cout << "Ten bang cap: " << tenBangCap << endl;
+	}
 };
 
-struct userBangCap
+struct NodeBangCap
+{
+	BangCap data;
+	NodeBangCap* link = NULL;
+	int i = 0;
+};
+
+struct UserBangCap
 {
 	string id = "";
 	string mabang = "";
 };
 
+
+struct NodeNhanVien
+{
+	User user;
+	NodeBangCap *listBC = NULL;
+	//UserBangCap ubc;
+	NodeNhanVien* link = NULL;
+};
+
+NodeNhanVien* CreateNode();
+void xuatNhanVien(NodeNhanVien *dsnv);
 
 
