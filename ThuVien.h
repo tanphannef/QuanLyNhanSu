@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
+#include <cctype> //thu vien chu ham isdigit() dung de kiem tra chuoi co chua ki tu khac so khong
 using namespace std;
-
-const int MAX = 10;
 
 struct date
 {
@@ -70,73 +69,6 @@ struct date
 			break;
 		}
 	}
-
-	//Ham nhap ngay cho user
-	void nhapDate()
-	{
-		do
-		{
-			cout << "Nam: ";
-			cin >> year;
-		} while (year < 1);
-		do
-		{
-			cout << "Thang: ";
-			cin >> month;
-		} while (month < 1 || month > 12);
-		switch (month)
-		{
-		case 1:
-		case 3:
-		case 5:
-		case 7:
-		case 8:
-		case 10:
-		case 12:
-			do
-			{
-				cout << "Ngay: ";
-				cin >> day;
-			} while (day < 1 || day > 31);
-			break;
-		case 4:
-		case 6:
-		case 9:
-		case 11:
-			do
-			{
-				cout << "Ngay: ";
-				cin >> day;
-			} while (day < 1 || day > 30);
-			break;
-		case 2:
-			if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
-			{
-				do
-				{
-					cout << "Ngay: ";
-					cin >> day;
-				} while (day < 1 || day > 29);
-			}
-			else
-			{
-				do
-				{
-					cout << "Ngay: ";
-					cin >> day;
-				} while (day < 1 || day > 28);
-			}
-			break;
-		default:
-			break;
-		}
-	}
-
-	//Ham xuat ngay cho user
-	void xuatDate()
-	{
-		cout << day<<"/"<<month<<"/"<<year;
-	}
 };
 
 struct User
@@ -148,59 +80,12 @@ struct User
 	date ngayVaoLam;
 	string chucvu = "";
 	bool gioitinh = true;
-
-	void nhapUser()
-	{
-		cout << "Nhap id: ";
-		getline(cin, id);
-		cout << "Nhap hoten: ";
-		getline(cin, hoten);
-		cout << "Nhap sdt: ";
-		getline(cin, sdt);
-		cout << "Nhap CCCD: ";
-		getline(cin, cccd);
-		cout << "Nhap ngay: " << endl;
-		ngayVaoLam.nhapDate();
-		cin.ignore();
-		cout << "Nhap chuc cu: ";
-		getline(cin, chucvu);
-		cout << "Nhap gioi tinh(1.nam/0.nu): ";
-		cin >> gioitinh;
-	}
-
-	void xuatUser()
-	{
-		cout << "ID: " << id << endl;
-		cout << "Hoten: " << hoten << endl;
-		cout << "SDT: " << sdt << endl;
-		cout << "CCCD: " << cccd << endl;
-		cout << "Ngay vao lam: ";
-		ngayVaoLam.xuatDate();
-		cout << endl;
-		cout << "Chuc vu: " << chucvu << endl;
-		cout << "Gioi tinh: " << gioitinh << endl;
-	}
 };
 
 struct BangCap
 {
 	string mabang = "";
 	string tenBangCap = "";
-
-	void nhapBangCap()
-	{
-		cin.ignore();
-		cout << "Nhap ma bang: ";
-		getline(cin, mabang);
-		cout << "Nhap ten bang cap: ";
-		getline(cin, tenBangCap);
-	}
-
-	void xuatBangCap()
-	{
-		cout << "Ma bang cap: " << mabang << endl;
-		cout << "Ten bang cap: " << tenBangCap << endl;
-	}
 };
 
 struct NodeBangCap
@@ -210,22 +95,28 @@ struct NodeBangCap
 	int i = 0;
 };
 
-struct UserBangCap
-{
-	string id = "";
-	string mabang = "";
-};
-
-
 struct NodeNhanVien
 {
 	User user;
 	NodeBangCap *listBC = NULL;
-	//UserBangCap ubc;
 	NodeNhanVien* link = NULL;
 };
 
+//Ham nhap va xuat cho struct date
+void nhapDate(date& d);
+void xuatDate(date d);
+
+//Ham nhap va xuat cho struct User
+void nhapUser(User& user);
+void xuatUser(User user);
+
+//Ham nhap va xuat cho struct BangCap
+void nhapBangCap(BangCap& bc);
+void xuatBangCap(BangCap bc);
+
+bool checkNumeric(string str);
 NodeNhanVien* CreateNode();
 void xuatNhanVien(NodeNhanVien *dsnv);
-
-
+void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien *nv); //them nhan vien vao dau ds
+void themDSNhanVien(NodeNhanVien*& dsnv); //them lien tuc nhan vien
+void xuatDSNhanVien(NodeNhanVien* dsnv); // xuat tat ca nhan vien co trong ds

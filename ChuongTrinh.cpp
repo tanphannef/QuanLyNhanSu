@@ -2,8 +2,8 @@
 
 int main()
 {
-	NodeNhanVien* nv = NULL;
-	nv = CreateNode();
-	xuatNhanVien(nv);
+	NodeNhanVien* dsnv = NULL;
+	themDSNhanVien(dsnv);
+	xuatDSNhanVien(dsnv);
 	return 0;
 }
