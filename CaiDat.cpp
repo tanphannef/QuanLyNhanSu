@@ -63,10 +63,11 @@ void nhapDate(date& d)
 //tim kiem User
 NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 {
+	//string id;
 	NodeNhanVien* iduser = dsnv;
 	while (iduser != NULL)
 	{
-		if (iduser->user.id == id)
+		if (iduser->user.id == id) 
 		{
 			return iduser;
 		}
@@ -75,8 +76,9 @@ NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 	return NULL;
 }
 
-void timKiemUser(NodeNhanVien* dsnv)
+void timKiemUser(NodeNhanVien* dsnv) 
 {
+	//NodeNhanVien* foundUser = checkID(dsnv);
 	string idToFind;
 	cin.ignore();
 	cout << "nhap id vao: ";
@@ -86,59 +88,12 @@ void timKiemUser(NodeNhanVien* dsnv)
 	{
 		xuatNhanVien(foundUser);
 	}
-	else
+	else 
 	{
 		cout << "khong tim thay nhan vien co ID: " << idToFind << endl;
 	}
-	return;
 }
 
-//xoa User
-void xoaNhanVien(NodeNhanVien* &dsnv, string idToDelete)
-{
-	if (dsnv == NULL) 
-	{
-		cout << "danh sach trong!";
-		return;
-	}
-
-	NodeNhanVien* tmp = dsnv;
-	if (tmp != NULL && tmp->user.id == idToDelete)
-	{
-		dsnv = tmp->link;
-		delete tmp;
-		return;
-	}
-
-	NodeNhanVien* prev = NULL;
-	while (tmp != NULL && tmp->user.id != idToDelete)
-	{
-		prev = tmp;
-		tmp = tmp->link;
-	}
-
-	prev->link = tmp->link;
-
-	delete tmp;
-}
-
-void xoaUser(NodeNhanVien* dsnv) 
-{
-	string idToDelete;
-	cin.ignore();
-	cout << "nhap id vao: ";
-	getline(cin, idToDelete);
-	NodeNhanVien* foundUser = checkID(dsnv, idToDelete);
-	if (foundUser != NULL)
-	{
-		xoaNhanVien(dsnv,idToDelete);
-	}
-	else
-	{
-		cout << "khong tim thay nhan vien co ID: " << idToDelete <<"de xoa"<< endl;
-	}
-	return;
-}
 
 void xuatNhanVien(NodeNhanVien* dsnv)
 {
@@ -153,7 +108,6 @@ void xuatNhanVien(NodeNhanVien* dsnv)
 		dsnv->listBC = dsnv->listBC->link;
 	}
 }
-
 void xuatDate(date d)
 {
 	cout << d.day << "/" << d.month << "/" << d.year;
@@ -179,7 +133,7 @@ void nhapUser(User& user)
 	} while (!checkNumeric(user.sdt) || user.sdt.length() < 10 || user.sdt.length() > 11);
 	//Kiem tra dieu kien danh cho cccd
 	do
-	{
+	{				 
 		cout << "Nhap CCCD: ";
 		getline(cin, user.cccd);
 		if (!checkNumeric(user.cccd) || user.cccd.length() < 12 || user.cccd.length() > 12)
@@ -199,6 +153,7 @@ void nhapUser(User& user)
 
 void xuatUser(User user)
 {
+	cout << "--------------------------\n";
 	cout << "ID: " << user.id << endl;
 	cout << "Hoten: " << user.hoten << endl;
 	cout << "SDT: " << user.sdt << endl;
@@ -217,7 +172,7 @@ void xuatUser(User user)
 	}
 }
 
-void nhapBangCap(BangCap& bc)
+void nhapBangCap(BangCap &bc)
 {
 	cin.ignore();
 	cout << "Nhap ma bang: ";
@@ -246,13 +201,13 @@ bool checkNumeric(string str)
 
 NodeNhanVien* CreateNode()
 {
-	NodeNhanVien* nv = new NodeNhanVien;
+	NodeNhanVien *nv = new NodeNhanVien;
 	nhapUser(nv->user);
-
+	
 	while (true)
 	{
 		char k;
-		cout << "Ban co muon them bang cap cua minh khong(y/n)";
+		cout << "Ban co muon them bang cap cua minh khong(y/n): ";
 		cin >> k;
 		if (k == 'n' || k == 'N')
 			break;
@@ -281,7 +236,7 @@ void themDSNhanVien(NodeNhanVien*& dsnv)
 {
 	char k;
 	do
-	{
+	{ 
 		NodeNhanVien* n = CreateNode();
 		themNhanVien(dsnv, n);
 		cout << "Ban co muon tiep tuc them nhan vien khong(y/n): ";
@@ -291,6 +246,11 @@ void themDSNhanVien(NodeNhanVien*& dsnv)
 
 void xuatDSNhanVien(NodeNhanVien* dsnv)
 {
+	if (dsnv == NULL)
+	{
+		cout << "Danh sach dang trong!" << endl;
+		return;
+	}
 	NodeNhanVien* p = dsnv;
 	while (p != NULL)
 	{
@@ -323,17 +283,9 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 	buffer[50] = '\0';
 	tmp->user.id = buffer;
 
-	char ho[11], tenlot[11], ten[11];
-	fscanf_s(fp, "%10s", ho, (unsigned)_countof(ho));
-	ho[10] = '\0';
-
-	fscanf_s(fp, "%10s", tenlot, (unsigned)_countof(tenlot));
-	tenlot[10] = '\0';
-
-	fscanf_s(fp, "%10s", ten, (unsigned)_countof(ten));
-	ten[10] = '\0';
-
-	tmp->user.hoten = string(ho) + " " + string(tenlot) + " " + string(ten);
+	fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
+	buffer[50] = '\0';
+	tmp->user.hoten = buffer;
 
 	fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
 	buffer[50] = '\0';
@@ -384,6 +336,15 @@ int writeFile(const char* filename, NodeNhanVien* dsnv)
 	{
 		fprintf_s(fp, "\n");
 		fprintf_s(fp, "%s", p->user.id.c_str());
+		
+		for (int i = 0; i < p->user.hoten.length(); i++)
+		{
+			if (p->user.hoten[i] == ' ')
+			{
+				p->user.hoten.replace(i, 1, "");
+			}
+		}
+
 		fprintf_s(fp, "\t%s", p->user.hoten.c_str());
 		fprintf_s(fp, "\t%s", p->user.sdt.c_str());
 		fprintf_s(fp, "\t%s", p->user.cccd.c_str());
@@ -406,3 +367,47 @@ int writeFile(const char* filename, NodeNhanVien* dsnv)
 	fclose(fp);
 	return 1;
 }
+
+void xoaNhanVien(NodeNhanVien*& dsnv)
+{
+	if (dsnv == NULL)
+	{
+		cout << "danh sach trong!";
+		return;
+	}
+	string id;
+	cin.ignore();
+	cout << "Nhap id can tim: ";
+	getline(cin, id);
+	NodeNhanVien* tmp = dsnv;
+	while (tmp != NULL)
+	{
+		if (tmp->user.id == id)
+		{
+			break;
+		}
+		tmp = tmp->link;
+	}
+	
+	if (tmp == NULL)
+	{
+		cout << "Khong tim thay id can xoa!" << endl;
+		return;
+	}
+	else
+	{
+		if (tmp == dsnv)
+		{
+			dsnv = dsnv->link;
+			delete tmp;
+		}
+		else
+		{
+			dsnv->link = tmp->link;
+			tmp->link = NULL;
+			delete tmp;
+		}
+	}
+	cout << "Xoa nhan vien thanh cong!" << endl;
+}
+
