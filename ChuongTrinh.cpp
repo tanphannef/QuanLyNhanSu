@@ -2,7 +2,7 @@
 
 int main()
 {
-	NodeNhanVien* dsnv = NULL;
+    NodeNhanVien* dsnv = NULL;
     int a;
     do
     {
@@ -18,40 +18,59 @@ int main()
         cout << "7. ghi file" << "\n";
         cout << "Nhap so : ";
         cin >> a;
+        system("cls");
         switch (a)
         {
         case 0://thoat
             break;
         case 1:
             cout << "--------------------\n";
-	        themDSNhanVien(dsnv);
+            themDSNhanVien(dsnv);
             cout << "--------------------\n";
+            system("cls");
             break;
         case 2:
-            cout << "--------------------------\n";
+            //cout << "--------------------------\n";
             xuatDSNhanVien(dsnv);
             cout << "--------------------------\n";
+            
             break;
         case 3://xoa
-            xoaUser(dsnv);
+            xoaNhanVien(dsnv);
             break;
         case 4://sua
-
+            
             break;
         case 5://tim kiem
             timKiemUser(dsnv);
+            
             break;
         case 6://doc file
-            readFile("quanlynhansu.txt", dsnv);
+            if(readFile("danhSachNhanVien.txt", dsnv))
+            {
+                cout << "Nhap file thanh cong!" << endl;
+            }
+            else
+            {
+                cout << "Doc file that bai!" << endl;
+            }
             break;
         case 7:
-            writeFile("luunhansu.txt", dsnv);
+            if (writeFile("danhSachNhanVien.txt", dsnv))
+            {
+                cout << "Viet file thanh cong!" << endl;
+            }
+            else
+            {
+                cout << "Viet file that bai!" << endl;
+            }
             break;
         default:
-            cout << "nhap lai: ";
+            cout << "nhap lai: "<<endl;
             break;
         }
 
     } while (a != 0);
-	return 0;
+
+    return 0;
 }
