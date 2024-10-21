@@ -33,7 +33,7 @@ int main()
             cout << "--------------------------\n";
             break;
         case 3://xoa
-            
+            xoaUser(dsnv);
             break;
         case 4://sua
 
