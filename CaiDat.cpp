@@ -60,6 +60,42 @@ void nhapDate(date& d)
 	}
 }
 
+//tim kiem User
+NodeNhanVien* checkID(NodeNhanVien* dsnv)
+{
+	string id;
+	NodeNhanVien* iduser = dsnv;
+	while (iduser != nullptr)
+	{
+		if (iduser->user.id == id) 
+		{
+			return iduser;
+		}
+		iduser = iduser->link;
+	}
+	return nullptr;
+}
+
+void timKiemUser(NodeNhanVien* dsnv) 
+{
+	NodeNhanVien* foundUser = checkID(dsnv);
+	string idToFind;
+	cin.ignore();
+	cout << "nhap id vao: ";
+	getline(cin, idToFind);
+	if (foundUser != nullptr)
+	{
+		cout << "tim thay nhan vien "<<foundUser->user.id << endl;
+	}
+	else 
+	{
+		cout << "khong tim thay nhan vien co ID: " << idToFind << endl;
+	}
+	return;
+}
+
+
+
 void xuatDate(date d)
 {
 	cout << d.day << "/" << d.month << "/" << d.year;
@@ -94,7 +130,7 @@ void nhapUser(User& user)
 		}
 	} while (!checkNumeric(user.cccd) || user.cccd.length() < 12 || user.cccd.length() > 12);
 
-	cout << "Nhap ngay: " << endl;
+	cout << "Nhap ngay vao lam viec " << endl;
 	nhapDate(user.ngayVaoLam);
 	cin.ignore();
 	cout << "Nhap chuc vu: ";
@@ -121,7 +157,6 @@ void xuatUser(User user)
 	{
 		cout << "Gioi tinh: nu" << endl;
 	}
-
 }
 
 void nhapBangCap(BangCap &bc)
@@ -218,7 +253,7 @@ void xuatDSNhanVien(NodeNhanVien* dsnv)
 		xuatUser(dsnv->user);
 		if (dsnv->listBC == NULL)
 		{
-			cout << "Khong co bang cap";
+			cout << "Khong co bang cap\n";
 		}
 		while (dsnv->listBC != NULL)
 		{
