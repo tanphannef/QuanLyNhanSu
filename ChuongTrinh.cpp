@@ -4,6 +4,8 @@ int main()
 {
 	NodeNhanVien* dsnv = NULL;
     int a;
+    //ifstream f("quanlysnhansu.txt");
+    //ofstream f("luunhansu.txt");
     do
     {
         cout << "\n";
@@ -14,6 +16,8 @@ int main()
         cout << "3. xoa" << "\n";
         cout << "4. sua" << "\n";
         cout << "5. tim kiem" << "\n";
+        cout << "6. doc file" << "\n";
+        cout << "7. ghi file" << "\n";
         cout << "Nhap so : ";
         cin >> a;
         switch (a)
@@ -38,6 +42,12 @@ int main()
             break;
         case 5://tim kiem
             timKiemUser(dsnv);
+            break;
+        case 6://doc file
+            readFile("quanlynhansu.txt", dsnv);
+            break;
+        case 7:
+            writeFile("luunhansu.txt", dsnv);
             break;
         default:
             cout << "nhap lai: ";
