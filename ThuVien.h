@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <cctype> //thu vien chu ham isdigit() dung de kiem tra chuoi co chua ki tu khac so khong
 using namespace std;
@@ -99,7 +98,7 @@ struct NodeBangCap
 struct NodeNhanVien
 {
 	User user;
-	NodeBangCap* listBC = NULL;
+	NodeBangCap *listBC = NULL;
 	NodeNhanVien* link = NULL;
 };
 
@@ -129,10 +128,8 @@ void xuatDSNhanVien(NodeNhanVien* dsnv); // xuat tat ca nhan vien co trong ds
 int readFile(const char* filename, NodeNhanVien*& dsnv);
 int writeFile(const char* filename, NodeNhanVien* dsnv);
 
-//Ham tim kiem User bang ID
+
 NodeNhanVien* checkID(NodeNhanVien* dsnv, string id);
 void timKiemUser(NodeNhanVien* dsnv);
 
-//Ham xoa User
-void xoaUser(NodeNhanVien* dsnv);
-void xoaNhanVien(NodeNhanVien* &dsnv, string idTodelete);
+void xoaNhanVien(NodeNhanVien*& dsnv);
