@@ -63,7 +63,6 @@ void nhapDate(date& d)
 //tim kiem User
 NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 {
-	//string id;
 	NodeNhanVien* iduser = dsnv;
 	while (iduser != NULL)
 	{
@@ -78,7 +77,6 @@ NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 
 void timKiemUser(NodeNhanVien* dsnv) 
 {
-	//NodeNhanVien* foundUser = checkID(dsnv);
 	string idToFind;
 	cin.ignore();
 	cout << "nhap id vao: ";
@@ -86,7 +84,6 @@ void timKiemUser(NodeNhanVien* dsnv)
 	NodeNhanVien* foundUser = checkID(dsnv, idToFind);
 	if (foundUser != NULL)
 	{
-		//cout << "tim thay nhan vien "<<foundUser->user.id << endl;
 		xuatNhanVien(foundUser);
 	}
 	else 
