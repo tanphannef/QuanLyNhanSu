@@ -344,14 +344,24 @@ int writeFile(const char* filename, NodeNhanVien* dsnv)
 				p->user.hoten.replace(i, 1, "");
 			}
 		}
-
 		fprintf_s(fp, "\t%s", p->user.hoten.c_str());
+
 		fprintf_s(fp, "\t%s", p->user.sdt.c_str());
 		fprintf_s(fp, "\t%s", p->user.cccd.c_str());
 		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.day);
 		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.month);
 		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.year);
+
+		for (int i = 0; i < p->user.chucvu.length(); i++)
+		{
+			if (p->user.chucvu[i] == ' ')
+			{
+				p->user.chucvu.replace(i, 1, "");
+			}
+		}
 		fprintf_s(fp, "\t%s", p->user.chucvu.c_str());
+
+
 		fprintf_s(fp, "\t%d", p->user.gioitinh);
 
 		NodeBangCap* tmp = p->listBC;
