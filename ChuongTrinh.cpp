@@ -4,8 +4,6 @@ int main()
 {
 	NodeNhanVien* dsnv = NULL;
     int a;
-    //ifstream f("quanlysnhansu.txt");
-    //ofstream f("luunhansu.txt");
     do
     {
         cout << "\n";
