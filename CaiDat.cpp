@@ -61,11 +61,11 @@ void nhapDate(date& d)
 }
 
 //tim kiem User
-NodeNhanVien* checkID(NodeNhanVien* dsnv)
+NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 {
-	string id;
+	//string id;
 	NodeNhanVien* iduser = dsnv;
-	while (iduser != nullptr)
+	while (iduser != NULL)
 	{
 		if (iduser->user.id == id) 
 		{
@@ -73,19 +73,21 @@ NodeNhanVien* checkID(NodeNhanVien* dsnv)
 		}
 		iduser = iduser->link;
 	}
-	return nullptr;
+	return NULL;
 }
 
 void timKiemUser(NodeNhanVien* dsnv) 
 {
-	NodeNhanVien* foundUser = checkID(dsnv);
+	//NodeNhanVien* foundUser = checkID(dsnv);
 	string idToFind;
 	cin.ignore();
 	cout << "nhap id vao: ";
 	getline(cin, idToFind);
-	if (foundUser != nullptr)
+	NodeNhanVien* foundUser = checkID(dsnv, idToFind);
+	if (foundUser != NULL)
 	{
-		cout << "tim thay nhan vien "<<foundUser->user.id << endl;
+		//cout << "tim thay nhan vien "<<foundUser->user.id << endl;
+		xuatNhanVien(foundUser);
 	}
 	else 
 	{
@@ -95,7 +97,19 @@ void timKiemUser(NodeNhanVien* dsnv)
 }
 
 
-
+void xuatNhanVien(NodeNhanVien* dsnv)
+{
+	xuatUser(dsnv->user);
+	if (dsnv->listBC == NULL)
+	{
+		cout << "Khong co bang cap" << endl;
+	}
+	while (dsnv->listBC != NULL)
+	{
+		xuatBangCap(dsnv->listBC->data);
+		dsnv->listBC = dsnv->listBC->link;
+	}
+}
 void xuatDate(date d)
 {
 	cout << d.day << "/" << d.month << "/" << d.year;
@@ -207,21 +221,6 @@ NodeNhanVien* CreateNode()
 	return nv;
 }
 
-void xuatNhanVien(NodeNhanVien* dsnv)
-{
-	xuatUser(dsnv->user);
-	if (dsnv->listBC == NULL)
-	{
-		cout << "Khong co bang cap"<<endl;
-	}
-	while(dsnv->listBC != NULL)
-	{
-		xuatBangCap(dsnv->listBC->data);
-		dsnv->listBC = dsnv->listBC->link;
-	}
-
-}
-
 void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* nv)
 {
 	if (dsnv == NULL)
@@ -248,18 +247,118 @@ void themDSNhanVien(NodeNhanVien*& dsnv)
 
 void xuatDSNhanVien(NodeNhanVien* dsnv)
 {
-	while (dsnv != NULL)
+	NodeNhanVien* p = dsnv;
+	while (p != NULL)
 	{
-		xuatUser(dsnv->user);
-		if (dsnv->listBC == NULL)
+		xuatUser(p->user);
+		NodeBangCap* tmp = p->listBC;
+		if (tmp == NULL)
 		{
-			cout << "Khong co bang cap\n";
+			cout << "Khong co bang cap" << endl;
 		}
-		while (dsnv->listBC != NULL)
+		while (tmp != NULL)
 		{
-			xuatBangCap(dsnv->listBC->data);
-			dsnv->listBC = dsnv->listBC->link;
+			xuatBangCap(tmp->data);
+			tmp = tmp->link;
 		}
-		dsnv = dsnv->link;
+		p = p->link;
 	}
+}
+
+int readFile(const char* filename, NodeNhanVien*& dsnv)
+{
+	FILE* fp;
+	fopen_s(&fp, filename, "rt");
+	if (fp == NULL)
+	{
+		return 0;
+	}
+	NodeNhanVien* tmp = new NodeNhanVien();
+	char buffer[51];
+	fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
+	buffer[50] = '\0';
+	tmp->user.id = buffer;
+
+	char ho[11], tenlot[11], ten[11];
+	fscanf_s(fp, "%10s", ho, (unsigned)_countof(ho));
+	ho[10] = '\0';
+
+	fscanf_s(fp, "%10s", tenlot, (unsigned)_countof(tenlot));
+	tenlot[10] = '\0';
+
+	fscanf_s(fp, "%10s", ten, (unsigned)_countof(ten));
+	ten[10] = '\0';
+
+	tmp->user.hoten = string(ho) + " " + string(tenlot) + " " + string(ten);
+
+	fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
+	buffer[50] = '\0';
+	tmp->user.sdt = buffer;
+
+	fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
+	buffer[50] = '\0';
+	tmp->user.cccd = buffer;
+
+	fscanf_s(fp, "%d", &tmp->user.ngayVaoLam.day);
+	fscanf_s(fp, "%d", &tmp->user.ngayVaoLam.month);
+	fscanf_s(fp, "%d", &tmp->user.ngayVaoLam.year);
+	fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
+	buffer[50] = '\0';
+	tmp->user.chucvu = buffer;
+
+	int gioitinh;
+	fscanf_s(fp, "%d", &gioitinh);
+	tmp->user.gioitinh = (gioitinh != 0);
+	int dem;
+	fscanf_s(fp, "%d", &dem);
+	for (int i = 0; i < dem; i++)
+	{
+		NodeBangCap* bc = new NodeBangCap();
+		fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
+		buffer[50] = '\0';
+		bc->data.mabang = buffer;
+
+		fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
+		buffer[50] = '\0';
+		bc->data.tenBangCap = buffer;
+
+		bc->link = tmp->listBC;
+		tmp->listBC = bc;
+	}
+	themNhanVien(dsnv, tmp);
+}
+int writeFile(const char* filename, NodeNhanVien* dsnv)
+{
+	FILE* fp;
+	fopen_s(&fp, filename, "wt");
+	if (fp == NULL)
+	{
+		return 0;
+	}
+	NodeNhanVien* p = dsnv;
+	while (p != NULL)
+	{
+		fprintf_s(fp, "\n");
+		fprintf_s(fp, "%s", p->user.id.c_str());
+		fprintf_s(fp, "\t%s", p->user.hoten.c_str());
+		fprintf_s(fp, "\t%s", p->user.sdt.c_str());
+		fprintf_s(fp, "\t%s", p->user.cccd.c_str());
+		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.day);
+		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.month);
+		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.year);
+		fprintf_s(fp, "\t%s", p->user.chucvu.c_str());
+		fprintf_s(fp, "\t%d", p->user.gioitinh);
+
+		NodeBangCap* tmp = p->listBC;
+		while (tmp != NULL)
+		{
+			fprintf_s(fp, "\t%d", tmp->i);
+			fprintf_s(fp, "\t%s", tmp->data.mabang.c_str());
+			fprintf_s(fp, "\t%s", tmp->data.tenBangCap.c_str());
+			tmp = tmp->link;
+		}
+		p = p->link;
+	}
+	fclose(fp);
+	return 1;
 }

@@ -114,12 +114,20 @@ void xuatUser(User user);
 void nhapBangCap(BangCap& bc);
 void xuatBangCap(BangCap bc);
 
-NodeNhanVien* checkID(NodeNhanVien* dsnv);
-void timKiemUser(NodeNhanVien* dsnv);
-
+//Ham kiem tra 1 chuoi co toan ki tu so hay khong
 bool checkNumeric(string str);
+
 NodeNhanVien* CreateNode();
-void xuatNhanVien(NodeNhanVien *dsnv);
-void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien *nv); //them nhan vien vao dau ds
+void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* nv); //them nhan vien vao dau ds
+void xuatNhanVien(NodeNhanVien* dsnv);
+
 void themDSNhanVien(NodeNhanVien*& dsnv); //them lien tuc nhan vien
 void xuatDSNhanVien(NodeNhanVien* dsnv); // xuat tat ca nhan vien co trong ds
+
+//Ham doc va ghi file txt
+int readFile(const char* filename, NodeNhanVien*& dsnv);
+int writeFile(const char* filename, NodeNhanVien* dsnv);
+
+
+NodeNhanVien* checkID(NodeNhanVien* dsnv, string id);
+void timKiemUser(NodeNhanVien* dsnv);
