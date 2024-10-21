@@ -114,6 +114,9 @@ void xuatUser(User user);
 void nhapBangCap(BangCap& bc);
 void xuatBangCap(BangCap bc);
 
+NodeNhanVien* checkID(NodeNhanVien* dsnv);
+void timKiemUser(NodeNhanVien* dsnv);
+
 bool checkNumeric(string str);
 NodeNhanVien* CreateNode();
 void xuatNhanVien(NodeNhanVien *dsnv);
