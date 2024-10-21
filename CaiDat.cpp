@@ -66,7 +66,7 @@ NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 	NodeNhanVien* iduser = dsnv;
 	while (iduser != NULL)
 	{
-		if (iduser->user.id == id) 
+		if (iduser->user.id == id)
 		{
 			return iduser;
 		}
@@ -75,7 +75,7 @@ NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 	return NULL;
 }
 
-void timKiemUser(NodeNhanVien* dsnv) 
+void timKiemUser(NodeNhanVien* dsnv)
 {
 	string idToFind;
 	cin.ignore();
@@ -86,13 +86,59 @@ void timKiemUser(NodeNhanVien* dsnv)
 	{
 		xuatNhanVien(foundUser);
 	}
-	else 
+	else
 	{
 		cout << "khong tim thay nhan vien co ID: " << idToFind << endl;
 	}
 	return;
 }
 
+//xoa User
+void xoaNhanVien(NodeNhanVien* &dsnv, string idToDelete)
+{
+	if (dsnv == NULL) 
+	{
+		cout << "danh sach trong!";
+		return;
+	}
+
+	NodeNhanVien* tmp = dsnv;
+	if (tmp != NULL && tmp->user.id == idToDelete)
+	{
+		dsnv = tmp->link;
+		delete tmp;
+		return;
+	}
+
+	NodeNhanVien* prev = NULL;
+	while (tmp != NULL && tmp->user.id != idToDelete)
+	{
+		prev = tmp;
+		tmp = tmp->link;
+	}
+
+	prev->link = tmp->link;
+
+	delete tmp;
+}
+
+void xoaUser(NodeNhanVien* dsnv) 
+{
+	string idToDelete;
+	cin.ignore();
+	cout << "nhap id vao: ";
+	getline(cin, idToDelete);
+	NodeNhanVien* foundUser = checkID(dsnv, idToDelete);
+	if (foundUser != NULL)
+	{
+		xoaNhanVien(dsnv,idToDelete);
+	}
+	else
+	{
+		cout << "khong tim thay nhan vien co ID: " << idToDelete <<"de xoa"<< endl;
+	}
+	return;
+}
 
 void xuatNhanVien(NodeNhanVien* dsnv)
 {
@@ -107,6 +153,7 @@ void xuatNhanVien(NodeNhanVien* dsnv)
 		dsnv->listBC = dsnv->listBC->link;
 	}
 }
+
 void xuatDate(date d)
 {
 	cout << d.day << "/" << d.month << "/" << d.year;
@@ -132,7 +179,7 @@ void nhapUser(User& user)
 	} while (!checkNumeric(user.sdt) || user.sdt.length() < 10 || user.sdt.length() > 11);
 	//Kiem tra dieu kien danh cho cccd
 	do
-	{				 
+	{
 		cout << "Nhap CCCD: ";
 		getline(cin, user.cccd);
 		if (!checkNumeric(user.cccd) || user.cccd.length() < 12 || user.cccd.length() > 12)
@@ -170,7 +217,7 @@ void xuatUser(User user)
 	}
 }
 
-void nhapBangCap(BangCap &bc)
+void nhapBangCap(BangCap& bc)
 {
 	cin.ignore();
 	cout << "Nhap ma bang: ";
@@ -199,9 +246,9 @@ bool checkNumeric(string str)
 
 NodeNhanVien* CreateNode()
 {
-	NodeNhanVien *nv = new NodeNhanVien;
+	NodeNhanVien* nv = new NodeNhanVien;
 	nhapUser(nv->user);
-	
+
 	while (true)
 	{
 		char k;
@@ -234,7 +281,7 @@ void themDSNhanVien(NodeNhanVien*& dsnv)
 {
 	char k;
 	do
-	{ 
+	{
 		NodeNhanVien* n = CreateNode();
 		themNhanVien(dsnv, n);
 		cout << "Ban co muon tiep tuc them nhan vien khong(y/n): ";
