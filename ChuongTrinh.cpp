@@ -30,23 +30,22 @@ int main()
             system("cls");
             break;
         case 2:
-            //cout << "--------------------------\n";
             xuatDSNhanVien(dsnv);
             cout << "--------------------------\n";
-            
+
             break;
         case 3://xoa
             xoaNhanVien(dsnv);
             break;
         case 4://sua
-            
+            subMenu(dsnv);
             break;
         case 5://tim kiem
             timKiemUser(dsnv);
-            
+
             break;
         case 6://doc file
-            if(readFile("danhSachNhanVien.txt", dsnv))
+            if (readFile("quanlynhansu.txt", dsnv))
             {
                 cout << "Nhap file thanh cong!" << endl;
             }
@@ -56,7 +55,7 @@ int main()
             }
             break;
         case 7:
-            if (writeFile("danhSachNhanVien.txt", dsnv))
+            if (writeFile("quanlynhansu.txt", dsnv))
             {
                 cout << "Viet file thanh cong!" << endl;
             }
@@ -66,7 +65,7 @@ int main()
             }
             break;
         default:
-            cout << "nhap lai: "<<endl;
+            cout << "nhap lai: " << endl;
             break;
         }
 
