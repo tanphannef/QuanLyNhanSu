@@ -98,7 +98,7 @@ struct NodeBangCap
 struct NodeNhanVien
 {
 	User user;
-	NodeBangCap *listBC = NULL;
+	NodeBangCap* listBC = NULL;
 	NodeNhanVien* link = NULL;
 };
 
@@ -133,3 +133,8 @@ NodeNhanVien* checkID(NodeNhanVien* dsnv, string id);
 void timKiemUser(NodeNhanVien* dsnv);
 
 void xoaNhanVien(NodeNhanVien*& dsnv);
+
+void subMenu(NodeNhanVien* dsnv);
+
+
+
