@@ -147,4 +147,7 @@ void xoaNhanVien(NodeNhanVien*& dsnv);//Ham xoa nhan vien
 void suaThongTinNhanVien(NodeNhanVien*& dsnv);//Ham sua thong tin nhan vien
 void subMenuSua();
 void subMenuTimKiem();
+void subMenuXoaSuaThemBC();
+
+void toHopXoaSuaThemBC(NodeNhanVien* dsnv);
 
