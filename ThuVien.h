@@ -145,6 +145,6 @@ void timKiem(NodeNhanVien* dsnv);
 void xoaNhanVien(NodeNhanVien*& dsnv);//Ham xoa nhan vien 
 
 void suaThongTinNhanVien(NodeNhanVien*& dsnv);//Ham sua thong tin nhan vien
-void subMenu();
-void subMenu1();
+void subMenuSua();
+void subMenuTimKiem();
 
