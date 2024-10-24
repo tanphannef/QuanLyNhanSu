@@ -66,7 +66,7 @@ NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 	NodeNhanVien* iduser = dsnv;
 	while (iduser != NULL)
 	{
-		if (iduser->user.id == id) 
+		if (iduser->user.id == id)
 		{
 			return iduser;
 		}
@@ -88,9 +88,23 @@ NodeNhanVien* checkCCCD(NodeNhanVien* dsnv, string cccd)
 	}
 	return NULL;
 }
-NodeNhanVien* timKiemUser(NodeNhanVien* dsnv) 
+
+NodeNhanVien* checkSDT(NodeNhanVien* dsnv, string sdt)
 {
-	//NodeNhanVien* foundUser = checkID(dsnv);
+	NodeNhanVien* iduser = dsnv;
+	while (iduser != NULL)
+	{
+		if (iduser->user.sdt == sdt)
+		{
+			return iduser;
+		}
+		iduser = iduser->link;
+	}
+	return NULL;
+}
+
+NodeNhanVien* timKiemUser(NodeNhanVien* dsnv)
+{
 	string idToFind;
 	cin.ignore();
 	cout << "nhap id vao: ";
@@ -118,6 +132,7 @@ void xuatNhanVien(NodeNhanVien* dsnv)
 		tmp = tmp->link;
 	}
 }
+
 void xuatDate(date d)
 {
 	cout << d.day << "/" << d.month << "/" << d.year;
@@ -143,7 +158,7 @@ void nhapUser(User& user)
 	} while (!checkNumeric(user.sdt) || user.sdt.length() < 10 || user.sdt.length() > 11);
 	//Kiem tra dieu kien danh cho cccd
 	do
-	{				 
+	{
 		cout << "Nhap CCCD: ";
 		getline(cin, user.cccd);
 		if (!checkNumeric(user.cccd) || user.cccd.length() < 12 || user.cccd.length() > 12)
@@ -190,7 +205,7 @@ void xuatUser(User user)
 	}
 }
 
-void nhapBangCap(BangCap &bc)
+void nhapBangCap(BangCap& bc)
 {
 	cin.ignore();
 	cout << "Nhap ma bang: ";
@@ -219,9 +234,9 @@ bool checkNumeric(string str)
 
 NodeNhanVien* CreateNode()
 {
-	NodeNhanVien *nv = new NodeNhanVien;
+	NodeNhanVien* nv = new NodeNhanVien;
 	nhapUser(nv->user);
-	
+
 	while (true)
 	{
 		char k;
@@ -254,15 +269,23 @@ void themDSNhanVien(NodeNhanVien*& dsnv)
 {
 	char k;
 	do
-	{ 
+	{
 		NodeNhanVien* n = CreateNode();
-		if (checkID(dsnv, n->user.id) == NULL && checkCCCD(dsnv, n->user.cccd) == NULL)
+		if (checkID(dsnv, n->user.id) != NULL)
 		{
-			themNhanVien(dsnv, n);
+			cout << "Id da ton tai!" << endl;
+		}
+		else if (checkSDT(dsnv, n->user.sdt) != NULL)
+		{
+			cout << "So dien thoai da ton tai!" << endl;
+		}
+		else if (checkCCCD(dsnv, n->user.cccd) != NULL)
+		{
+			cout << "Cccd da ton tai!" << endl;
 		}
 		else
 		{
-			cout << "Id da ton tai!" << endl;
+			themNhanVien(dsnv, n);
 		}
 		cout << "Ban co muon tiep tuc them nhan vien khong(y/n): ";
 		cin >> k;
@@ -378,7 +401,7 @@ int writeFile(const char* filename, NodeNhanVien* dsnv)
 	{
 		fprintf_s(fp, "\n");
 		fprintf_s(fp, "%s", p->user.id.c_str());
-		
+
 		//Xoa khoang trang o trong chuoi
 		for (int i = 0; i < p->user.hoten.length(); i++)
 		{
@@ -415,7 +438,7 @@ void xoaNhanVien(NodeNhanVien*& dsnv)
 {
 	if (dsnv == NULL)
 	{
-		cout << "danh sach trong!"<<endl;
+		cout << "danh sach trong!" << endl;
 		return;
 	}
 	string id;
@@ -431,7 +454,7 @@ void xoaNhanVien(NodeNhanVien*& dsnv)
 		}
 		tmp = tmp->link;
 	}
-	
+
 	if (tmp == NULL)
 	{
 		cout << "Khong tim thay id can xoa!" << endl;
@@ -456,7 +479,7 @@ void xoaNhanVien(NodeNhanVien*& dsnv)
 
 void timKiemTheoChucVu(NodeNhanVien* dsnv)
 {
-	string chucvu;					 
+	string chucvu;
 	cin.ignore();
 	cout << "Nhap chuc vu can tim: ";
 	getline(cin, chucvu);
@@ -513,16 +536,70 @@ void timKiemTheoMaBang(NodeNhanVien* dsnv)
 			}
 			tmp = tmp->link;
 		}
-		
+
 		n = n->link;
 	}
 
-	
+
 	if (!flag)
 	{
 		cout << "Khong tim thay nhan vien co ma bang: " << maBang << endl;
 		return;
 	}
+}
+
+void subMenu1()
+{
+	cout << "Danh sach tim kiem thong tin nhan vien" << endl;
+	cout << "0. thoat" << endl;
+	cout << "1. tim kiem theo ID" << endl;
+	cout << "2. tim kiem theo chuc vu" << endl;
+	cout << "3. tim kiem theo ma bang" << endl;
+}
+
+void timKiem(NodeNhanVien* dsnv)
+{
+	NodeNhanVien* id = NULL;
+	int k;
+	do
+	{
+		system("cls");
+		subMenu1();
+		cout << "Nhap Lua Chon: ";
+		cin >> k;
+		switch (k)
+		{
+		case 0:
+			return;
+		case 1:
+			id = timKiemUser(dsnv);
+			if (id != NULL)
+			{
+				xuatNhanVien(id);
+			}
+			else
+			{
+				cout << "Khong tim thay nhan vien!" << endl;
+			}
+			break;
+		case 2:
+			timKiemTheoChucVu(dsnv);
+			break;
+		case 3:
+			timKiemTheoMaBang(dsnv);
+			break;
+		default:
+			cout << "Nhap lai\n";
+			break;
+		}
+		char check;
+		cout << "Ban co muon tiep tuc tim kiem khong(y/n): ";
+		cin >> check;
+		if (check == 'n' || check == 'N')
+		{
+			return;
+		}
+	} while (k != 0);
 }
 
 void subMenu()
@@ -596,7 +673,7 @@ void suaThongTinNhanVien(NodeNhanVien*& dsnv)
 			case 5://sua chuc vu
 				cout << "Nhap chuc vu: ";
 				getline(cin, n->user.chucvu);
-				
+
 				for (int i = 0; i < n->user.chucvu.length(); i++)
 				{
 					if (n->user.chucvu[i] == ' ')
