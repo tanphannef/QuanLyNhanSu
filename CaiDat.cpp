@@ -702,3 +702,49 @@ void suaThongTinNhanVien(NodeNhanVien*& dsnv)
 		} while (k != 0);
 	}
 }
+
+void subMenuXoaSuaThemBC()
+{
+	cout << "0. thoat" << endl;
+	cout << "1. them Bang Cap" << endl;
+	cout << "2. xoa Nhan Vien" << endl;
+	cout << "3. Sua Thong Tin Nhan Vien" << endl;
+}
+
+void toHopXoaSuaThemBC(NodeNhanVien* dsnv)
+{
+	NodeNhanVien* n = timKiemUser(dsnv);
+	if (n == NULL)
+	{
+		cout << "Khong tim thay id nhan vien can sua!" << endl;
+	}
+	else
+	{
+			int k;
+		do {
+			cout << "Nhap lua chon: ";
+			cin >> k;
+			switch (k)
+			{
+			case 0:
+				return;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+				cout << "nhap lai\n ";
+				break;
+			}
+			char check;
+			cout << "Ban co muon tiep tuc sua khong(y/n): ";
+			cin >> check;
+			if (check == 'n' || check == 'N')
+			{
+				return;
+			}
+		} while (k != 0);
+	}
+}
