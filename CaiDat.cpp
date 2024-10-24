@@ -548,7 +548,7 @@ void timKiemTheoMaBang(NodeNhanVien* dsnv)
 	}
 }
 
-void subMenu1()
+void subMenuTimKiem()
 {
 	cout << "Danh sach tim kiem thong tin nhan vien" << endl;
 	cout << "0. thoat" << endl;
@@ -564,7 +564,7 @@ void timKiem(NodeNhanVien* dsnv)
 	do
 	{
 		system("cls");
-		subMenu1();
+		subMenuTimKiem();
 		cout << "Nhap Lua Chon: ";
 		cin >> k;
 		switch (k)
@@ -602,7 +602,7 @@ void timKiem(NodeNhanVien* dsnv)
 	} while (k != 0);
 }
 
-void subMenu()
+void subMenuSua()
 {
 	cout << "Danh sach sua thong tin nhan vien" << "\n";
 	cout << "0. thoat" << "\n";
@@ -627,7 +627,7 @@ void suaThongTinNhanVien(NodeNhanVien*& dsnv)
 		do {
 			system("cls");
 			xuatNhanVien(n);
-			subMenu();
+			subMenuSua();
 			cout << "Nhap lua chon: ";
 			cin >> k;
 			cin.ignore();
