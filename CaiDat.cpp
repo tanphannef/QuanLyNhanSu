@@ -459,7 +459,14 @@ int writeFile(const char* filename, NodeNhanVien* dsnv)
 		fprintf_s(fp, "\t%d", p->user.gioitinh);
 
 		NodeBangCap* tmp = p->listBC;
-		fprintf_s(fp, "\t%d", tmp->i);
+		if (tmp == NULL)
+		{
+			fprintf_s(fp, "\t%d", 0);
+		}
+		else
+		{
+			fprintf_s(fp, "\t%d", tmp->i);
+		}
 		while (tmp != NULL)
 		{
 			fprintf_s(fp, "\t%s", tmp->data.mabang.c_str());
@@ -476,6 +483,11 @@ void xoaDau(NodeNhanVien*& dsnv)
 {
 	if (dsnv == NULL)
 		return;
+	if (dsnv->link == NULL)
+	{
+		dsnv = NULL;
+		return;
+	}
 	NodeNhanVien* n = dsnv;
 	dsnv = dsnv->link;
 	n->link = NULL;
@@ -729,7 +741,7 @@ void subMenuTimKiem()
 	cout << "======================================================" << endl;
 }
 
-void timKiem(NodeNhanVien* dsnv)
+void timKiem(NodeNhanVien*& dsnv)
 {
 	NodeNhanVien* id = NULL;
 	int k;
@@ -785,7 +797,7 @@ void subMenuXoaSuaThemBC()
 	cout << "|3. Sua Thong Tin Nhan Vien     |" << endl;
 	cout << "=================================" << endl;
 }
-void toHopXoaSuaThemBC(NodeNhanVien* dsnv)
+void toHopXoaSuaThemBC(NodeNhanVien*& dsnv)
 {
 	int k;
 	do {
