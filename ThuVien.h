@@ -137,7 +137,7 @@ NodeNhanVien* checkCCCD(NodeNhanVien* dsnv, string cccd);
 NodeNhanVien* checkSDT(NodeNhanVien* dsnv, string sdt);
 NodeBangCap* checkBC(NodeBangCap* bc, string mabc);
 
-void timKiem(NodeNhanVien* dsnv);
+void timKiem(NodeNhanVien*& dsnv);
 NodeNhanVien* timKiemUser(NodeNhanVien* dsnv);
 void timKiemTheoChucVu(NodeNhanVien* dsnv);
 void timKiemTheoMaBang(NodeNhanVien* dsnv);
@@ -149,7 +149,7 @@ void subMenuSua();
 void subMenuTimKiem();
 
 void subMenuXoaSuaThemBC();
-void toHopXoaSuaThemBC(NodeNhanVien* dsnv);
+void toHopXoaSuaThemBC(NodeNhanVien*& dsnv);
 
 void xoaDau(NodeNhanVien*& dsnv);
 void xoaCuoi(NodeNhanVien*& dsnv);
