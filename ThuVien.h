@@ -98,7 +98,7 @@ struct NodeBangCap
 struct NodeNhanVien
 {
 	User user;
-	NodeBangCap* listBC = NULL;
+	NodeBangCap *listBC = NULL;
 	NodeNhanVien* link = NULL;
 };
 
@@ -121,33 +121,35 @@ NodeNhanVien* CreateNode();
 void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* nv); //them nhan vien vao dau ds
 void xuatNhanVien(NodeNhanVien* dsnv);
 
+void themBC(NodeNhanVien*& dsnv);
+
 void themDSNhanVien(NodeNhanVien*& dsnv); //them lien tuc nhan vien
 void xuatDSNhanVien(NodeNhanVien* dsnv); // xuat tat ca nhan vien co trong ds
 
-int demSoLuongNhanVien(NodeNhanVien* dsnv);//Ham dem so luong nhan vien
-
 //Ham doc va ghi file txt
+int demSoLuongNhanVien(NodeNhanVien* dsnv);
 int readFile(const char* filename, NodeNhanVien*& dsnv);
 int writeFile(const char* filename, NodeNhanVien* dsnv);
 
 
-NodeNhanVien* checkID(NodeNhanVien* dsnv, string id);//Ham kiem tra id
-
-NodeNhanVien* checkCCCD(NodeNhanVien* dsnv, string cccd);//Ham kiem tra CCCD
-
+NodeNhanVien* checkID(NodeNhanVien* dsnv, string id);
+NodeNhanVien* checkCCCD(NodeNhanVien* dsnv, string cccd);
 NodeNhanVien* checkSDT(NodeNhanVien* dsnv, string sdt);
+NodeBangCap* checkBC(NodeBangCap* bc, string mabc);
 
-NodeNhanVien* timKiemUser(NodeNhanVien* dsnv);//Ham tim kiem nhan vien
-void timKiemTheoChucVu(NodeNhanVien* dsnv);//Ham tim kiem nhan vien thong qua chuc vu
-void timKiemTheoMaBang(NodeNhanVien* dsnv);//Ham tim kiem nhan vien thong qua ma bang
 void timKiem(NodeNhanVien* dsnv);
+NodeNhanVien* timKiemUser(NodeNhanVien* dsnv);
+void timKiemTheoChucVu(NodeNhanVien* dsnv);
+void timKiemTheoMaBang(NodeNhanVien* dsnv);
+void xoaNhanVien(NodeNhanVien*& dsnv);
+void suaThongTinNhanVien(NodeNhanVien*& dsnv);
 
-void xoaNhanVien(NodeNhanVien*& dsnv);//Ham xoa nhan vien 
 
-void suaThongTinNhanVien(NodeNhanVien*& dsnv);//Ham sua thong tin nhan vien
 void subMenuSua();
 void subMenuTimKiem();
-void subMenuXoaSuaThemBC();
 
+void subMenuXoaSuaThemBC();
 void toHopXoaSuaThemBC(NodeNhanVien* dsnv);
 
+void xoaDau(NodeNhanVien*& dsnv);
+void xoaCuoi(NodeNhanVien*& dsnv);
