@@ -103,7 +103,7 @@ struct NodeBangCap
 struct NodeNhanVien
 {
 	User user;
-	NodeBangCap *listBC = NULL;
+	NodeBangCap* listBC = NULL;
 	NodeNhanVien* link = NULL;
 };
 
