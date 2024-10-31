@@ -3,7 +3,6 @@
 int main()
 {
     NodeNhanVien* dsnv = NULL;
-    NodeNhanVien* id = NULL;  //dung de tim kiem theo id cho nguoi dung
     int a;
     if (readFile("danhSachNhanVien.txt", dsnv))
     {
@@ -24,7 +23,9 @@ int main()
             switch (a)
             {
             case 0://thoat
-                return 0;
+                //writeFile("danhSachNhanVien.txt", dsnv);
+                //return 0;
+                break;
             case 1:
                 cout << "--------------------\n";
                 themDSNhanVien(dsnv);
@@ -32,7 +33,6 @@ int main()
 
                 break;
             case 2:
-                //cout << "--------------------------\n";
                 xuatDSNhanVien(dsnv);
                 cout << "--------------------------\n";
 
@@ -49,15 +49,19 @@ int main()
             cin >> check;
             if (check == 'n' || check == 'N')
             {
-                return 0;
+                break;
             }
 
         } while (a != 0);
-        writeFile("danhSachNhanVien.txt", dsnv);
     }
     else
     {
         cout << "Doc file that bai!" << endl;
     }
+    if (writeFile("danhSachNhanVien.txt", dsnv))
+    {
+        return 0;
+    }
+
     return 0;
 }
