@@ -1,7 +1,12 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 #include <cctype> //thu vien chu ham isdigit() dung de kiem tra chuoi co chua ki tu khac so khong
+#include <ctime>
+#include <sstream>
+#include <iomanip>
 using namespace std;
+
 
 struct date
 {
@@ -107,7 +112,7 @@ void nhapDate(date& d);
 void xuatDate(date d);
 
 //Ham nhap va xuat cho struct User
-void nhapUser(User& user);
+void nhapUser(NodeNhanVien* dsnv, User& user);
 void xuatUser(User user);
 
 //Ham nhap va xuat cho struct BangCap
@@ -117,11 +122,11 @@ void xuatBangCap(BangCap bc);
 //Ham kiem tra 1 chuoi co toan ki tu so hay khong
 bool checkNumeric(string str);
 
-NodeNhanVien* CreateNode();
+NodeNhanVien* CreateNode(NodeNhanVien* dsnv);
 void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* nv); //them nhan vien vao dau ds
 void xuatNhanVien(NodeNhanVien* dsnv);
 
-void themBC(NodeNhanVien*& dsnv);
+void themBC(NodeNhanVien*& dsnv, NodeNhanVien* id);
 
 void themDSNhanVien(NodeNhanVien*& dsnv); //them lien tuc nhan vien
 void xuatDSNhanVien(NodeNhanVien* dsnv); // xuat tat ca nhan vien co trong ds
@@ -141,15 +146,15 @@ void timKiem(NodeNhanVien*& dsnv);
 NodeNhanVien* timKiemUser(NodeNhanVien* dsnv);
 void timKiemTheoChucVu(NodeNhanVien* dsnv);
 void timKiemTheoMaBang(NodeNhanVien* dsnv);
-void xoaNhanVien(NodeNhanVien*& dsnv);
-void suaThongTinNhanVien(NodeNhanVien*& dsnv);
+void xoaNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
+void suaThongTinNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
 
 void subMenuSua();
 void subMenuTimKiem();
 
 void subMenuXoaSuaThemBC();
-void toHopXoaSuaThemBC(NodeNhanVien*& dsnv);
+void toHopXoaSuaThemBC(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
 void xoaDau(NodeNhanVien*& dsnv);
 void xoaCuoi(NodeNhanVien*& dsnv);
