@@ -73,6 +73,5 @@ int main()
         }
 
     } while (a != 0);
-
     return 0;
 }
