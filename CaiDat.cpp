@@ -255,13 +255,42 @@ void xuatUser(User user)
 	}
 }
 
-void nhapBangCap(BangCap &bc)
+void nhapBangCap(BangCap& bc)
 {
-	cin.ignore();
-	cout << "Nhap ma bang: ";
-	getline(cin, bc.mabang);
-	cout << "Nhap ten bang cap: ";
-	getline(cin, bc.tenBangCap);
+	//cin.ignore();
+	//cout << "Nhap ma bang: ";
+	//getline(cin, bc.mabang);
+	//cout << "Nhap ten bang cap: ";
+	//getline(cin, bc.tenBangCap);
+	int k;
+	do {
+		cout << "===============================================" << endl;
+		cout << "====================BANG CAP===================" << endl;
+		cout << "|1. IELTS										|" << "\n";
+		cout << "|2. TOEIC										|" << "\n";
+		cout << "|3. TOFFEL										|" << "\n";
+		cout << "===============================================" << endl;
+		cout << "Nhap lua chon: ";
+		cin >> k;
+		switch (k)
+		{
+		case 1:
+			bc.mabang = "IS";
+			bc.tenBangCap = "IELTS";
+			return;
+		case 2:
+			bc.mabang = "TC";
+			bc.tenBangCap = "TOEIC";
+			return;
+		case 3:
+			bc.mabang = "TF";
+			bc.tenBangCap = "TOFFEL";
+			return;
+		default:
+			cout << "Nhap lai\n";
+			break;
+		}
+	} while (k != 0);
 }
 
 void xuatBangCap(BangCap bc)
