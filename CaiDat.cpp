@@ -236,23 +236,36 @@ void nhapUser(NodeNhanVien* dsnv, User& user)
 
 void xuatUser(User user)
 {
-	cout << "--------------------------\n";
-	cout << "ID: " << user.id << endl;
-	cout << "Hoten: " << user.hoten << endl;
-	cout << "SDT: " << user.sdt << endl;
-	cout << "CCCD: " << user.cccd << endl;
-	cout << "Ngay vao lam: ";
-	xuatDate(user.ngayVaoLam);
-	cout << endl;
-	cout << "Chuc vu: " << user.chucvu << endl;
+	cout << "--------------------------------------------------------------------------------------\n";
+	cout << "|" << "ID" <<"    "<< "|" << "  " << "Ho Ten" << " " << "|" << "\t" << "SDT" << "\t" << "|" <<"     " << "CCCD" << "\t  " << "|" << " " << "Ngay Vao Lam" << " " << "|" << " " << "Chuc Vu" << " " << "|" << "Gioi Tinh" << "|" << endl;
+	cout << "|------|---------|--------------|-----------------|--------------|---------|---------|\n";
+	cout << "|" << user.id << " " << "|" << " " << user.hoten << " " << "|" << "  " << user.sdt << "  " << "|" << "   " << user.cccd << "  " << "|"; cout <<"  "; xuatDate(user.ngayVaoLam); cout << "  "; cout << "|" << user.chucvu<<"  " << "|";
 	if (user.gioitinh)
 	{
-		cout << "Gioi tinh: nam" << endl;
+		cout << "NAM";
 	}
 	else
 	{
-		cout << "Gioi tinh: nu" << endl;
+		cout << "NU";
 	}
+	cout <<"      "<< "|"<<endl;
+	cout << "--------------------------------------------------------------------------------------\n";
+
+	//cout << "Hoten: " << user.hoten << endl;
+	//cout << "SDT: " << user.sdt << endl;
+	//cout << "CCCD: " << user.cccd << endl;
+	//cout << "Ngay vao lam: ";
+	//xuatDate(user.ngayVaoLam);
+	//cout << endl;
+	//cout << "Chuc vu: " << user.chucvu << endl;
+	//if (user.gioitinh)
+	//{
+	//	cout << "Gioi tinh: nam" << endl;
+	//}
+	//else
+	//{
+	//	cout << "Gioi tinh: nu" << endl;
+	//}
 }
 
 void nhapBangCap(BangCap& bc)
