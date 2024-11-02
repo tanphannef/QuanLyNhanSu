@@ -23,8 +23,6 @@ int main()
             switch (a)
             {
             case 0://thoat
-                //writeFile("danhSachNhanVien.txt", dsnv);
-                //return 0;
                 break;
             case 1:
                 cout << "--------------------\n";
