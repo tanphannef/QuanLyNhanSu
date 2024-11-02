@@ -97,14 +97,14 @@ struct NodeBangCap
 {
 	BangCap data;
 	NodeBangCap* link = NULL;
-	int i = 0;
 };
 
 struct NodeNhanVien
 {
 	User user;
-	NodeBangCap* listBC = NULL;
+	NodeBangCap *listBC = NULL;
 	NodeNhanVien* link = NULL;
+	int demBC = 0;
 };
 
 //Ham nhap va xuat cho struct date
@@ -146,7 +146,6 @@ void timKiem(NodeNhanVien*& dsnv);
 NodeNhanVien* timKiemUser(NodeNhanVien* dsnv);
 void timKiemTheoChucVu(NodeNhanVien* dsnv);
 void timKiemTheoMaBang(NodeNhanVien* dsnv);
-void xoaNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
 void suaThongTinNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
 
@@ -156,5 +155,14 @@ void subMenuTimKiem();
 void subMenuXoaSuaThemBC();
 void toHopXoaSuaThemBC(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
+//Cac ham xoa NhanVien
 void xoaDau(NodeNhanVien*& dsnv);
 void xoaCuoi(NodeNhanVien*& dsnv);
+void xoaNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
+
+//Cac ham xoa BangCap
+void xoaDau(NodeBangCap*& bc);
+void xoaCuoi(NodeBangCap*& bc);
+void xoaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
+
+void sapXepTangDanTheoId(NodeNhanVien*& dsnv);
