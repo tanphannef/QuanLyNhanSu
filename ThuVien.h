@@ -102,7 +102,7 @@ struct NodeBangCap
 struct NodeNhanVien
 {
 	User user;
-	NodeBangCap *listBC = NULL;
+	NodeBangCap* listBC = NULL;
 	NodeNhanVien* link = NULL;
 	int demBC = 0;
 };
@@ -164,5 +164,10 @@ void xoaNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
 void xoaDau(NodeBangCap*& bc);
 void xoaCuoi(NodeBangCap*& bc);
 void xoaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
+
+void subMenuBangCap();
+void xuatDSBangCap();
+void subMenuQLBC();
+void QuanLyBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
 void sapXepTangDanTheoId(NodeNhanVien*& dsnv);
