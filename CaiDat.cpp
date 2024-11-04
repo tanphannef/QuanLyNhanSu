@@ -17,7 +17,7 @@ void nhapDate(date& d)
 		if (dem == 3)
 		{
 			do
-			{	  
+			{
 				d.year = nam;
 				if (d.year < 1 || d.year > year)
 				{
@@ -33,9 +33,9 @@ void nhapDate(date& d)
 				d.month = thang;
 				if (d.month < 1 || d.month > 12 || (d.month > month && d.year == year))
 				{
-					cout<<"Nhap thang khong chinh xac vui long nhap lai!"<<endl;
-					cout<<"Thang: ";
-					cin>>thang;
+					cout << "Nhap thang khong chinh xac vui long nhap lai!" << endl;
+					cout << "Thang: ";
+					cin >> thang;
 					d.month = thang;
 					count++;
 				}
@@ -115,7 +115,7 @@ void nhapDate(date& d)
 		if (count != 0)
 		{
 			cin.ignore();
-		} 
+		}
 		break;
 	}
 }
@@ -225,7 +225,7 @@ void xuatDate(date d)
 	default:
 		break;
 	}
-	
+
 }
 
 void nhapUser(NodeNhanVien* dsnv, User& user)
@@ -321,7 +321,7 @@ void nhapUser(NodeNhanVien* dsnv, User& user)
 
 void xuatUser(User user)
 {
-	cout << "|" << user.id << " " << "|"<< user.hoten;
+	cout << "|" << user.id << " " << "|" << user.hoten;
 	switch (user.hoten.length())
 	{
 	case 0:
@@ -352,7 +352,7 @@ void xuatUser(User user)
 		cout << setw(12);
 		break;
 	case 9:
-		cout<<setw(11);
+		cout << setw(11);
 		break;
 	case 10:
 		cout << setw(10);
@@ -402,9 +402,9 @@ void xuatUser(User user)
 	default:
 		break;
 	}
-	cout<< "|" << "   " << user.cccd << "  " << "|";
+	cout << "|" << "   " << user.cccd << "  " << "|";
 	xuatDate(user.ngayVaoLam);
-	cout << "|" << user.chucvu<<" ";
+	cout << "|" << user.chucvu << " ";
 	switch (user.chucvu.length())
 	{
 	case 0:
@@ -518,8 +518,59 @@ void nhapBangCap(BangCap& bc)
 
 void xuatBangCap(BangCap bc)
 {
-	cout << "Ma bang cap: " << bc.mabang << endl;
-	cout << "Ten bang cap: " << bc.tenBangCap << endl;
+	cout << "-------------------------------------------------------------------------------------------------------------------\n";
+	cout << "|" <<"Ma BC"<< setw(2) << "|" << "Ten BC" << setw(6) << "|" << "ID" << setw(5) << "|" << setw(10) << "Ho Ten" << setw(10) << "|" << setw(10) << "Chuc Vu" << setw(5) << "|" << setw(10) << "Gioi Tinh" << "|" << endl;
+	cout << "|--|------|------|-------------------|-------------|-----------------|------------------|--------------|----------|\n";
+
+	//cout << "Ma bang cap: " << bc.mabang << endl;
+	//cout << "Ten bang cap: " << bc.tenBangCap << endl;
+}
+
+void xuatDSBangCap()
+{
+	
+}
+
+void subMenuQLBC() 
+{
+	cout << "===============================================" << endl;
+	cout << "================QUAN LY BANG CAP===============" << endl;
+	cout << "|0. Thoat                                     |" << "\n";
+	cout << "|1. Xuat Bang Cap                             |" << "\n";
+	cout << "|2. Them Bang Ca                              |" << "\n";
+	cout << "|3. Xoa Bang Cap                              |" << "\n";
+	cout << "|4. Sua Bang Cap                              |" << "\n";
+	cout << "===============================================" << endl;
+}
+
+void QuanLyBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n)
+{
+	int k;
+	do {
+		subMenuQLBC();
+		cout << "Nhap lua chon: ";
+		cin >> k;
+		system("cls");
+		switch (k)
+		{
+		case 0:
+			return;
+		case 1:
+			xuatDSBangCap();
+			break;
+		case 2:
+			themBC(dsnv, n);
+			break;
+		case 3:
+			xoaBangCap(dsnv, n);
+			return;
+		case 4:
+			break;
+		default:
+			cout << "nhap lai\n ";
+			break;
+		}
+	} while (k != 0);
 }
 
 bool checkNumeric(string str)
@@ -607,7 +658,7 @@ void xuatDSNhanVien(NodeNhanVien* dsnv)
 		return;
 	}
 	cout << "---------------------------------------------------------------------------------------------------------\n";
-	cout << "|" << "ID" << setw(5) << "|" << setw(10) << "Ho Ten" << setw(10) << "|" << setw(6) << "SDT" << setw(8) << "|" << setw(10) << "CCCD" << setw(8) << "|" << setw(10) << "Ngay Vao Lam" << setw(7) << "|" << setw(10) << "Chuc Vu" << setw(5) << "|" << setw(10) << "Gioi Tinh" << "|"<<endl;
+	cout << "|" << "ID" << setw(5) << "|" << setw(10) << "Ho Ten" << setw(10) << "|" << setw(6) << "SDT" << setw(8) << "|" << setw(10) << "CCCD" << setw(8) << "|" << setw(10) << "Ngay Vao Lam" << setw(7) << "|" << setw(10) << "Chuc Vu" << setw(5) << "|" << setw(10) << "Gioi Tinh" << "|" << endl;
 	cout << "|------|-------------------|-------------|-----------------|------------------|--------------|----------|\n";
 	NodeNhanVien* p = dsnv;
 	while (p != NULL)
@@ -1026,7 +1077,7 @@ void suaThongTinNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n)
 void subMenuTimKiem()
 {
 	cout << "======================================================" << endl;
-	cout << "==============MENU TIM KIEM NHAN VIEN=================" << endl;
+	cout << "===============MENU TIM KIEM NHAN VIEN================" << endl;
 	cout << "|0. Thoat                                            |" << endl;
 	cout << "|1. Tim kiem theo ID                                 |" << endl;
 	cout << "|2. Tim kiem theo chuc vu                            |" << endl;
@@ -1223,12 +1274,12 @@ void xoaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n)
 		do
 		{
 			cout << "===============================================" << endl;
-			cout << "=================Ma BANG CAP===================" << endl;
-			cout << "|0. Thoat                                     " << endl;
-			cout << "|1. IS									       " << "\n";
-			cout << "|2. TC									       " << "\n";
-			cout << "|3. TF									       " << "\n";
-			cout << "|4. OTHER...								   " << "\n";
+			cout << "=================MA BANG CAP===================" << endl;
+			cout << "|0. Thoat                                      " << endl;
+			cout << "|1. IS									        " << "\n";
+			cout << "|2. TC									        " << "\n";
+			cout << "|3. TF									        " << "\n";
+			cout << "|4. OTHER...								    " << "\n";
 			cout << "===============================================" << endl;
 			cout << "Nhap lua chon: ";
 			cin >> k;
@@ -1329,7 +1380,18 @@ void sapXepTangDanTheoId(NodeNhanVien*& dsnv)
 			if (m->user.id < n->user.id)
 			{
 
-		   }
+			}
 		}
 	}
+}
+
+void subMenuBangCap() 
+{
+	cout << "=================================" << endl;
+	cout << "=========QUAN LY BANG CAP========" << endl;
+	cout << "|0. Thoat                       |" << endl;
+	cout << "|1. Xuat Bang Cap               |" << endl;
+	cout << "|2. Them Bang Cap               |" << endl;
+	cout << "|3. Xoa Bang Cap                |" << endl;
+	cout << "=================================" << endl;
 }
