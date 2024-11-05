@@ -170,4 +170,7 @@ void xuatDSBangCap();
 void subMenuQLBC();
 void QuanLyBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
+void subMenuQLNV();
+void QuanLyNhanVien(NodeNhanVien*& dsnv);
+
 void sapXepTangDanTheoId(NodeNhanVien*& dsnv);
