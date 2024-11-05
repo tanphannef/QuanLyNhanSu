@@ -13,10 +13,8 @@ int main()
             cout << "==============|Chuong Trinh Quan Ly Nhan Su|=============" << endl;
             cout << "======================|Danh Sach Menu|===================" << "\n";
             cout << "|0. Thoat                                               |" << "\n";
-            cout << "|1. Them Nhan Vien                                      |" << "\n";
-            cout << "|2. Xuat Danh Sach Nhan Vien                            |" << "\n";
-            cout << "|3. Quan Ly Bang Cap                                    |" << "\n";
-            cout << "|4. Tim Kiem                                            |" << "\n";
+            cout << "|1. Quan Ly Nhan Vien                                   |" << "\n";
+            cout << "|2. Quan Ly bang Cap                                    |" << "\n";
             cout << "=========================================================" << endl;
             cout << "Nhap so : ";
             cin >> a;
@@ -26,21 +24,13 @@ int main()
             case 0://thoat
                 break;
             case 1:
-                cout << "--------------------\n";
-                themDSNhanVien(dsnv);
-                cout << "--------------------\n";
-
+                QuanLyNhanVien(dsnv);
                 break;
             case 2:
-                xuatDSNhanVien(dsnv);
-                cout << "--------------------------\n";
-
-                break;
-            case 3:
+                //xuatDSNhanVien(dsnv);
+                //cout << "--------------------------\n";
                 /*QuanLyBangCap(dsnv)*/
-                break;
-            case 4:
-                timKiem(dsnv);
+
                 break;
             default:
                 cout << "nhap lai: " << endl;
