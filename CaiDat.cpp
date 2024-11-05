@@ -626,6 +626,46 @@ NodeNhanVien* CreateNode(NodeNhanVien* dsnv)
 	return nv;
 }
 
+void subMenuQLNV()
+{
+	cout << "===============================================" << endl;
+	cout << "===============QUAN LY NHAN VIEN===============" << endl;
+	cout << "|0. Thoat                                     |" << "\n";
+	cout << "|1. Them Nhan Vien                            |" << "\n";
+	cout << "|2. Xuat Danh Sach Nhan Vien                  |" << "\n";
+	cout << "|3. Tim Kiem Thong Tin Nhan Vien              |" << "\n";
+	cout << "===============================================" << endl;
+}
+void QuanLyNhanVien(NodeNhanVien*& dsnv)
+{
+	int k;
+	do {
+		subMenuQLNV();
+		cout << "Nhap lua chon: ";
+		cin >> k;
+		system("cls");
+		switch (k)
+		{
+		case 0:
+			return;
+		case 1:
+			themDSNhanVien(dsnv);
+			break;
+		case 2:
+			xuatDSNhanVien(dsnv);
+			break;
+		case 3:
+			timKiem(dsnv);
+			return;
+		case 4:
+			break;
+		default:
+			cout << "nhap lai\n ";
+			break;
+		}
+	} while (k != 0);
+}
+
 void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* nv)
 {
 	if (dsnv == NULL)
@@ -1385,13 +1425,13 @@ void sapXepTangDanTheoId(NodeNhanVien*& dsnv)
 	}
 }
 
-void subMenuBangCap() 
-{
-	cout << "=================================" << endl;
-	cout << "=========QUAN LY BANG CAP========" << endl;
-	cout << "|0. Thoat                       |" << endl;
-	cout << "|1. Xuat Bang Cap               |" << endl;
-	cout << "|2. Them Bang Cap               |" << endl;
-	cout << "|3. Xoa Bang Cap                |" << endl;
-	cout << "=================================" << endl;
-}
+//void subMenuBangCap() 
+//{
+//	cout << "=================================" << endl;
+//	cout << "=========QUAN LY BANG CAP========" << endl;
+//	cout << "|0. Thoat                       |" << endl;
+//	cout << "|1. Xuat Bang Cap               |" << endl;
+//	cout << "|2. Them Bang Cap               |" << endl;
+//	cout << "|3. Xoa Bang Cap                |" << endl;
+//	cout << "=================================" << endl;
+//}
