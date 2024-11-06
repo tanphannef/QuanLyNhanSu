@@ -3,6 +3,7 @@
 int main()
 {
     NodeNhanVien* dsnv = NULL;
+    NodeBangCap* dsbc = NULL;
     int a;
     if (readFile("danhSachNhanVien.txt", dsnv))
     {
@@ -14,7 +15,7 @@ int main()
             cout << "======================|Danh Sach Menu|===================" << "\n";
             cout << "|0. Thoat                                               |" << "\n";
             cout << "|1. Quan Ly Nhan Vien                                   |" << "\n";
-            cout << "|2. Quan Ly bang Cap                                    |" << "\n";
+            cout << "|2. Quan Ly Bang Cap                                    |" << "\n";
             cout << "=========================================================" << endl;
             cout << "Nhap so : ";
             cin >> a;
@@ -27,10 +28,7 @@ int main()
                 QuanLyNhanVien(dsnv);
                 break;
             case 2:
-                //xuatDSNhanVien(dsnv);
-                //cout << "--------------------------\n";
-                /*QuanLyBangCap(dsnv)*/
-
+                QuanLyBangCap(dsnv, dsbc);
                 break;
             default:
                 cout << "nhap lai: " << endl;
