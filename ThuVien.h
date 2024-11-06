@@ -164,11 +164,12 @@ void xoaNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
 void xoaDau(NodeBangCap*& bc);
 void xoaCuoi(NodeBangCap*& bc);
 void xoaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
+//void SuaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
-void subMenuBangCap();
-void xuatDSBangCap();
+NodeBangCap* taoDanhSachBC(NodeNhanVien* dsnv);
+void xuatDSBangCap(NodeBangCap *& dsbc, NodeNhanVien* dsnv);
 void subMenuQLBC();
-void QuanLyBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
+void QuanLyBangCap(NodeNhanVien* dsnv, NodeBangCap* dsbc);
 
 void subMenuQLNV();
 void QuanLyNhanVien(NodeNhanVien*& dsnv);
