@@ -49,7 +49,7 @@ int main()
     {
         cout << "Doc file that bai!" << endl;
     }
-    if (writeFile("danhSachNhanVien.txt", dsnv))
+    if (writeFile("danhSachNhanVien.txt", dsnv) && writeFile("danhSachBangCap.txt", dsbc))
     {
         return 0;
     }
