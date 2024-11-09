@@ -126,6 +126,7 @@ NodeNhanVien* CreateNode(NodeNhanVien* dsnv);
 void themNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* nv); //them nhan vien vao dau ds
 void xuatNhanVien(NodeNhanVien* dsnv);
 
+void themBC(NodeBangCap*& dsbc, NodeBangCap* n);
 void themBC(NodeNhanVien*& dsnv, NodeNhanVien* id);
 
 void themDSNhanVien(NodeNhanVien*& dsnv); //them lien tuc nhan vien
@@ -136,6 +137,11 @@ int demSoLuongNhanVien(NodeNhanVien* dsnv);
 int readFile(const char* filename, NodeNhanVien*& dsnv);
 int writeFile(const char* filename, NodeNhanVien* dsnv);
 
+//Ham doc va ghi file QLBC
+int demSoLuongBangCap(NodeBangCap* dsbc);
+int readFile(const char* filename, NodeBangCap*& dsbc);
+int writeFile(const char* filename, NodeBangCap* dsbc);
+
 
 NodeNhanVien* checkID(NodeNhanVien* dsnv, string id);
 NodeNhanVien* checkCCCD(NodeNhanVien* dsnv, string cccd);
@@ -144,10 +150,13 @@ NodeBangCap* checkBC(NodeBangCap* bc, string mabc);
 
 void timKiem(NodeNhanVien*& dsnv);
 NodeNhanVien* timKiemUser(NodeNhanVien* dsnv);
-void timKiemTheoChucVu(NodeNhanVien* dsnv);
+NodeNhanVien* timKiemTheoChucVu(NodeNhanVien* dsnv, string chucvu);
+void xuatDanhSachChucVu(NodeNhanVien* dsnv);
 void timKiemTheoMaBang(NodeNhanVien* dsnv);
 void suaThongTinNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
+//Chuan hoa chuoi du lieu
+void chuanHoaChuoi(string& str);
 
 void subMenuSua();
 void subMenuTimKiem();
@@ -166,12 +175,14 @@ void xoaCuoi(NodeBangCap*& bc);
 void xoaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
 //void SuaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n);
 
-NodeBangCap* taoDanhSachBC(NodeNhanVien* dsnv);
+NodeBangCap* taoDanhSachBC(NodeNhanVien* dsnv, NodeBangCap* dsbc);
 void xuatDSBangCap(NodeBangCap *& dsbc, NodeNhanVien* dsnv);
+void xuatDSBangCap(NodeBangCap* dsbc);
 void subMenuQLBC();
-void QuanLyBangCap(NodeNhanVien* dsnv, NodeBangCap* dsbc);
+void QuanLyBangCap(NodeNhanVien* dsnv, NodeBangCap*& dsbc);
 
+
+bool checkNhanVienSoHuuBangCap(NodeNhanVien* dsnv, string mabang);
+void xoaBangCap(NodeBangCap*& dsbc, NodeNhanVien* dsnv);
 void subMenuQLNV();
 void QuanLyNhanVien(NodeNhanVien*& dsnv);
-
-void sapXepTangDanTheoId(NodeNhanVien*& dsnv);
