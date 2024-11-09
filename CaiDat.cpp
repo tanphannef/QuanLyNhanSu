@@ -975,10 +975,6 @@ void QuanLyBangCap(NodeNhanVien* dsnv, NodeBangCap*& dsbc)
 			break;
 		}
 	} while (k != 0);
-	if (writeFile("danhSachBangCap.txt", dsbc))
-	{
-		return;
-	}
 }
 
 bool checkNumeric(string str)
@@ -1454,7 +1450,13 @@ void timKiemTheoMaBang(NodeNhanVien* dsnv)
 					cin.ignore();
 					cout << "Nhap ma bang can tim: ";
 					getline(cin, maBang);
-					chuanHoaChuoi(maBang);
+					for (int i = 0; i < maBang.length(); i++)
+					{
+						if (maBang[i] >= 'a' && maBang[i] <= 'z')
+						{
+							maBang[i] -= 32;
+						}
+					}
 					NodeNhanVien* nv = n;
 					while (nv != NULL)
 					{
