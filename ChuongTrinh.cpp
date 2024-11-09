@@ -5,7 +5,7 @@ int main()
     NodeNhanVien* dsnv = NULL;
     NodeBangCap* dsbc = NULL;
     int a;
-    if (readFile("danhSachNhanVien.txt", dsnv))
+    if (readFile("danhSachNhanVien.txt", dsnv) && readFile("danhSachBangCap.txt",dsbc))
     {
         do
         {
@@ -28,6 +28,7 @@ int main()
                 QuanLyNhanVien(dsnv);
                 break;
             case 2:
+
                 QuanLyBangCap(dsnv, dsbc);
                 break;
             default:
