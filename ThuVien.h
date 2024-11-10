@@ -5,6 +5,7 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <chrono>
 using namespace std;
 
 
@@ -133,12 +134,10 @@ void themDSNhanVien(NodeNhanVien*& dsnv); //them lien tuc nhan vien
 void xuatDSNhanVien(NodeNhanVien* dsnv); // xuat tat ca nhan vien co trong ds
 
 //Ham doc va ghi file txt
-int demSoLuongNhanVien(NodeNhanVien* dsnv);
 int readFile(const char* filename, NodeNhanVien*& dsnv);
 int writeFile(const char* filename, NodeNhanVien* dsnv);
 
 //Ham doc va ghi file QLBC
-int demSoLuongBangCap(NodeBangCap* dsbc);
 int readFile(const char* filename, NodeBangCap*& dsbc);
 int writeFile(const char* filename, NodeBangCap* dsbc);
 
@@ -186,3 +185,14 @@ bool checkNhanVienSoHuuBangCap(NodeNhanVien* dsnv, string mabang);
 void xoaBangCap(NodeBangCap*& dsbc, NodeNhanVien* dsnv);
 void subMenuQLNV();
 void QuanLyNhanVien(NodeNhanVien*& dsnv);
+
+void menuThongKe();
+void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc);
+
+//Cac ham dem
+int demSoLuongNhanVien(NodeNhanVien* dsnv);
+int demSoLuongBangCap(NodeBangCap* dsbc);
+void demSoLuongNhanVienNamNu(NodeNhanVien* dsnv, int &nam, int &nu);
+void demSoLuongBangCapCuaMoiNhanVien(NodeNhanVien* dsnv);
+int tinhSoNgayDaLamViec(int ngay, int thang, int nam);
+void xuatSoNgayDaLamViec(NodeNhanVien* dsnv);
