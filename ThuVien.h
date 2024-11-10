@@ -196,3 +196,4 @@ void demSoLuongNhanVienNamNu(NodeNhanVien* dsnv, int &nam, int &nu);
 void demSoLuongBangCapCuaMoiNhanVien(NodeNhanVien* dsnv);
 int tinhSoNgayDaLamViec(int ngay, int thang, int nam);
 void xuatSoNgayDaLamViec(NodeNhanVien* dsnv);
+int nhapSoNguyen();
