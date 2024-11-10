@@ -16,6 +16,7 @@ int main()
             cout << "|0. Thoat                                               |" << "\n";
             cout << "|1. Quan Ly Nhan Vien                                   |" << "\n";
             cout << "|2. Quan Ly Bang Cap                                    |" << "\n";
+            cout << "|3. Thong Ke                                            |" << "\n";
             cout << "=========================================================" << endl;
             cout << "Nhap so : ";
             cin >> a;
@@ -30,6 +31,9 @@ int main()
             case 2:
 
                 QuanLyBangCap(dsnv, dsbc);
+                break;
+            case 3:
+                thongKe(dsnv, dsbc);
                 break;
             default:
                 cout << "nhap lai: " << endl;
