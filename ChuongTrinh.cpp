@@ -5,7 +5,7 @@ int main()
     NodeNhanVien* dsnv = NULL;
     NodeBangCap* dsbc = NULL;
     int a;
-    if (readFile("danhSachNhanVien.txt", dsnv) && readFile("danhSachBangCap.txt",dsbc))
+    if (readFile("danhSachNhanVien.txt", dsnv) && readFile("danhSachBangCap.txt", dsbc))
     {
         do
         {
@@ -18,8 +18,7 @@ int main()
             cout << "|2. Quan Ly Bang Cap                                    |" << "\n";
             cout << "|3. Thong Ke                                            |" << "\n";
             cout << "=========================================================" << endl;
-            cout << "Nhap so : ";
-            cin >> a;
+            a = nhapSoNguyen();
             system("cls");
             switch (a)
             {
@@ -36,7 +35,7 @@ int main()
                 thongKe(dsnv, dsbc);
                 break;
             default:
-                cout << "nhap lai: " << endl;
+                cout << "Ban da lua chon sai!" << endl;
                 break;
             }
             char check;
@@ -57,6 +56,5 @@ int main()
     {
         return 0;
     }
-
     return 0;
 }
