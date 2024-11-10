@@ -1989,3 +1989,497 @@ int writeFile(const char* filename, NodeBangCap* dsbc)
 	fclose(fp);
 	return 1;
 }
+
+void demSoLuongNhanVienNamNu(NodeNhanVien* dsnv, int& nam, int& nu)
+{
+	NodeNhanVien* head = dsnv;
+	while (head != NULL)
+	{
+		if (head->user.gioitinh == true)
+		{
+			nam++;
+		}
+		else
+		{
+			nu++;
+		}
+		head = head->link;
+	}
+}
+void demSoLuongBangCapCuaMoiNhanVien(NodeNhanVien* dsnv)
+{
+	NodeNhanVien* n = dsnv;
+	cout << "-------------------------------------------------------------------------------------------------------------------\n";
+	cout << "|" << "ID" << setw(5) << "|" << setw(10) << "Ho Ten" << setw(10) << "|" << setw(6) << "SDT" << setw(8) << "|" << setw(10) << "CCCD" << setw(8) << "|" << setw(10) << "Ngay Vao Lam" << setw(7) << "|" << setw(10) << "Chuc Vu" << setw(5) << "|" << setw(10) << "Gioi Tinh" << "|" <<"SLBC"<<setw(6)<<"|" << endl;
+	cout << "|------|-------------------|-------------|-----------------|------------------|--------------|----------|---------|\n";
+	if (n == NULL)
+	{
+		cout << "Danh sach nhan vien dang trong!" << endl;
+	}
+	while (n != NULL)
+	{
+		cout << "|" << n->user.id << " " << "|" << n->user.hoten;
+		switch (n->user.hoten.length())
+		{
+		case 0:
+			cout << setw(20);
+			break;
+		case 1:
+			cout << setw(19);
+			break;
+		case 2:
+			cout << setw(18);
+			break;
+		case 3:
+			cout << setw(17);
+			break;
+		case 4:
+			cout << setw(16);
+			break;
+		case 5:
+			cout << setw(15);
+			break;
+		case 6:
+			cout << setw(14);
+			break;
+		case 7:
+			cout << setw(13);
+			break;
+		case 8:
+			cout << setw(12);
+			break;
+		case 9:
+			cout << setw(11);
+			break;
+		case 10:
+			cout << setw(10);
+			break;
+		case 11:
+			cout << setw(9);
+			break;
+		case 12:
+			cout << setw(8);
+			break;
+		case 13:
+			cout << setw(7);
+			break;
+		case 14:
+			cout << setw(6);
+			break;
+		case 15:
+			cout << setw(5);
+			break;
+		case 16:
+			cout << setw(4);
+			break;
+		case 17:
+			cout << setw(3);
+			break;
+		case 18:
+			cout << setw(2);
+			break;
+		case 19:
+			cout << setw(1);
+			break;
+		case 20:
+			cout << setw(0);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << "  " << n->user.sdt;
+		switch (n->user.sdt.length())
+		{
+		case 10:
+			cout << setw(2);
+			break;
+		case 11:
+			cout << setw(1);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << "   " << n->user.cccd << "  " << "|";
+		xuatDate(n->user.ngayVaoLam);
+		cout << "|" << n->user.chucvu << " ";
+		switch (n->user.chucvu.length())
+		{
+		case 0:
+			cout << setw(14);
+			break;
+		case 1:
+			cout << setw(13);
+			break;
+		case 2:
+			cout << setw(12);
+			break;
+		case 3:
+			cout << setw(11);
+			break;
+		case 4:
+			cout << setw(10);
+			break;
+		case 5:
+			cout << setw(9);
+			break;
+		case 6:
+			cout << setw(8);
+			break;
+		case 7:
+			cout << setw(7);
+			break;
+		case 8:
+			cout << setw(6);
+			break;
+		case 9:
+			cout << setw(5);
+			break;
+		case 10:
+			cout << setw(4);
+			break;
+		case 11:
+			cout << setw(3);
+			break;
+		case 12:
+			cout << setw(2);
+			break;
+		case 13:
+			cout << setw(1);
+			break;
+		case 14:
+			cout << setw(0);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << " ";
+		if (n->user.gioitinh)
+		{
+			cout << "NAM";
+			cout << "      " << "|";
+		}
+		else
+		{
+			cout << "NU";
+			cout << "       " << "|";
+		}
+		cout << n->demBC;
+		switch (to_string(n->demBC).length())
+		{	
+		case 0:
+			cout << setw(10);
+			break;
+		case 1:
+			cout << setw(9);
+			break;
+		case 2:
+			cout << setw(8);
+			break;
+		case 3:
+			cout << setw(7);
+			break;
+		case 4:
+			cout << setw(6);
+			break;
+		case 5:
+			cout << setw(5);
+			break;
+		case 6:
+			cout << setw(4);
+			break;
+		case 7:
+			cout << setw(3);
+			break;
+		case 8:
+			cout << setw(2);
+			break;
+		case 9:
+			cout << setw(1);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << endl;
+		n = n->link;
+	}
+}
+int tinhSoNgayDaLamViec(int ngay, int thang, int nam)
+{
+	auto ngayHienTai = chrono::system_clock::now();
+	time_t ngayHienTaiTimeT = chrono::system_clock::to_time_t(ngayHienTai);
+	tm* tmNgayHienTai = localtime(&ngayHienTaiTimeT);
+
+	// Chuyển đổi ngày vào làm việc thành đối tượng std::tm
+	tm ngayVaoLam = {};
+	ngayVaoLam.tm_mday = ngay;
+	ngayVaoLam.tm_mon = thang - 1;  // tháng bắt đầu từ 0
+	ngayVaoLam.tm_year = nam - 1900; // năm bắt đầu từ 1900
+
+	// Tạo các đối tượng time_point từ std::tm để tính toán
+	auto timePointNgayVaoLam = chrono::system_clock::from_time_t(mktime(&ngayVaoLam));
+
+	// Tính số giờ giữa hai thời điểm và sau đó chuyển đổi sang ngày
+	auto soGioLamViec = chrono::duration_cast<chrono::hours>(ngayHienTai - timePointNgayVaoLam).count();
+	int soNgayLamViec = soGioLamViec / 24;
+	return soNgayLamViec;
+}
+void xuatSoNgayDaLamViec(NodeNhanVien* dsnv)
+{
+	NodeNhanVien* n = dsnv;
+	cout << "----------------------------------------------------------------------------------------------------------------------\n";
+	cout << "|" << "ID" << setw(5) << "|" << setw(10) << "Ho Ten" << setw(10) << "|" << setw(6) << "SDT" << setw(8) << "|" << setw(10) << "CCCD" << setw(8) << "|" << setw(10) << "Ngay Vao Lam" << setw(7) << "|" << setw(10) << "Chuc Vu" << setw(5) << "|" << setw(10) << "Gioi Tinh" << "|" << "SoNgayDaLam" << setw(2) << "|" << endl;
+	cout << "|------|-------------------|-------------|-----------------|------------------|--------------|----------|------------|\n";
+	if (n == NULL)
+	{
+		cout << "Danh sach nhan vien dang trong!" << endl;
+	}
+	while (n != NULL)
+	{
+		int soNgayLamViec = tinhSoNgayDaLamViec(n->user.ngayVaoLam.day, n->user.ngayVaoLam.month, n->user.ngayVaoLam.year);
+		cout << "|" << n->user.id << " " << "|" << n->user.hoten;
+		switch (n->user.hoten.length())
+		{
+		case 0:
+			cout << setw(20);
+			break;
+		case 1:
+			cout << setw(19);
+			break;
+		case 2:
+			cout << setw(18);
+			break;
+		case 3:
+			cout << setw(17);
+			break;
+		case 4:
+			cout << setw(16);
+			break;
+		case 5:
+			cout << setw(15);
+			break;
+		case 6:
+			cout << setw(14);
+			break;
+		case 7:
+			cout << setw(13);
+			break;
+		case 8:
+			cout << setw(12);
+			break;
+		case 9:
+			cout << setw(11);
+			break;
+		case 10:
+			cout << setw(10);
+			break;
+		case 11:
+			cout << setw(9);
+			break;
+		case 12:
+			cout << setw(8);
+			break;
+		case 13:
+			cout << setw(7);
+			break;
+		case 14:
+			cout << setw(6);
+			break;
+		case 15:
+			cout << setw(5);
+			break;
+		case 16:
+			cout << setw(4);
+			break;
+		case 17:
+			cout << setw(3);
+			break;
+		case 18:
+			cout << setw(2);
+			break;
+		case 19:
+			cout << setw(1);
+			break;
+		case 20:
+			cout << setw(0);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << "  " << n->user.sdt;
+		switch (n->user.sdt.length())
+		{
+		case 10:
+			cout << setw(2);
+			break;
+		case 11:
+			cout << setw(1);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << "   " << n->user.cccd << "  " << "|";
+		xuatDate(n->user.ngayVaoLam);
+		cout << "|" << n->user.chucvu << " ";
+		switch (n->user.chucvu.length())
+		{
+		case 0:
+			cout << setw(14);
+			break;
+		case 1:
+			cout << setw(13);
+			break;
+		case 2:
+			cout << setw(12);
+			break;
+		case 3:
+			cout << setw(11);
+			break;
+		case 4:
+			cout << setw(10);
+			break;
+		case 5:
+			cout << setw(9);
+			break;
+		case 6:
+			cout << setw(8);
+			break;
+		case 7:
+			cout << setw(7);
+			break;
+		case 8:
+			cout << setw(6);
+			break;
+		case 9:
+			cout << setw(5);
+			break;
+		case 10:
+			cout << setw(4);
+			break;
+		case 11:
+			cout << setw(3);
+			break;
+		case 12:
+			cout << setw(2);
+			break;
+		case 13:
+			cout << setw(1);
+			break;
+		case 14:
+			cout << setw(0);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << " ";
+		if (n->user.gioitinh)
+		{
+			cout << "NAM";
+			cout << "      " << "|";
+		}
+		else
+		{
+			cout << "NU";
+			cout << "       " << "|";
+		}
+		cout << soNgayLamViec;
+		switch (to_string(soNgayLamViec).length())
+		{
+		case 1:
+			cout << setw(12);
+			break;
+		case 2:
+			cout << setw(11);
+			break;
+		case 3:
+			cout << setw(10);
+			break;
+		case 4:
+			cout << setw(9);
+			break;
+		case 5:
+			cout << setw(8);
+			break;
+		case 6:
+			cout << setw(7);
+			break;
+		case 7:
+			cout << setw(6);
+			break;
+		case 8:
+			cout << setw(5);
+			break;
+		case 9:
+			cout << setw(4);
+			break;
+		case 10:
+			cout << setw(3);
+			break;
+		case 11:
+			cout << setw(2);
+			break;
+		case 12:
+			cout << setw(1);
+			break;
+		default:
+			break;
+		}
+		cout << "|" << endl;
+		n = n->link;
+	}
+}
+void menuThongKe()
+{
+	cout << "======================THONG KE=======================" << endl;
+	cout << "|0. Thoat                                           |" << endl;
+	cout << "|1. Xem so luong nhan vien dang quan ly             |" << endl;
+	cout << "|2. Xem so luong bang cap dang quan ly              |" << endl;
+	cout << "|3. Xem so luong nhan vien nam                      |" << endl;
+	cout << "|4. Xem so luong nhan vien nu                       |" << endl;
+	cout << "|5. Xem so luong bang cap cua moi nhan vien         |" << endl;
+	cout << "|6. Xem so ngay da lam viec cua moi nhan vien       |" << endl;
+	cout << "=====================================================" << endl;
+}
+void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
+{
+	int k;
+	int soLuongNhanVien = demSoLuongNhanVien(dsnv);
+	int soLuongBangCap = demSoLuongBangCap(dsbc);
+	int nam = 0;
+	int nu = 0;
+	demSoLuongNhanVienNamNu(dsnv, nam, nu);
+	do
+	{
+		system("cls");
+		menuThongKe();
+		cout << "Nhap lua chon: ";
+		cin >> k;
+		switch (k)
+		{ 
+		case 1:
+			cout << "So luong nhan vien dang quan ly la: " << soLuongNhanVien << endl;
+			break;
+		case 2:
+			cout << "So luong bang cap dang quan ly la: " << soLuongBangCap << endl;
+			break;
+		case 3:
+			cout << "So luong nhan vien nam la: " << nam << endl;
+			break;
+		case 4:
+			cout << "So luong nhan vien nu la: " << nu << endl;
+			break;
+		case 5:
+			demSoLuongBangCapCuaMoiNhanVien(dsnv);
+			break;
+		case 6:
+			xuatSoNgayDaLamViec(dsnv);
+			break;
+		default:
+			break;
+		}
+		char check;
+		cout << "Ban co muon tiep tuc xem thong ke khong(y/n): ";
+		cin >> check;
+		if (check == 'n' || check == 'N')
+			break;
+	} while (k != 0);
+}
