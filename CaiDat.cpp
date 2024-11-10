@@ -120,6 +120,30 @@ void nhapDate(date& d)
 	}
 }
 
+int nhapSoNguyen()
+{
+	int n;
+	while (true)
+	{
+		cout << "Nhap lua chon: ";
+		cin >> n;
+
+		// Kiểm tra nếu `cin` ở trạng thái lỗi (do nhập sai định dạng)
+		if (cin.fail()) {
+			// Xóa trạng thái lỗi của `cin`
+			cin.clear();
+			// Bỏ qua các ký tự trong dòng cho đến khi gặp ký tự xuống dòng
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Nhap sai dinh dang! Moi nhap lai." << endl;
+		}
+		else
+		{
+			// Nếu không có lỗi, thoát khỏi vòng lặp
+			break;
+		}
+	}
+	return n;
+}
 //tim kiem User
 NodeNhanVien* checkID(NodeNhanVien* dsnv, string id)
 {
@@ -166,10 +190,9 @@ NodeNhanVien* checkSDT(NodeNhanVien* dsnv, string sdt)
 }
 NodeNhanVien* timKiemUser(NodeNhanVien* dsnv)
 {
-	//NodeNhanVien* foundUser = checkID(dsnv);
 	string idToFind;
 	cin.ignore();
-	cout << "nhap id vao: ";
+	cout << "Nhap id vao: ";
 	getline(cin, idToFind);
 	for (int i = 0; i < idToFind.length(); i++)
 	{
@@ -480,8 +503,7 @@ void nhapBangCap(BangCap& bc)
 		cout << "|3. TOFFEL(TF)									" << "\n";
 		cout << "|4. OTHER...								    " << "\n";
 		cout << "===============================================" << endl;
-		cout << "Nhap lua chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		switch (k)
 		{
 		case 1:
@@ -511,7 +533,7 @@ void nhapBangCap(BangCap& bc)
 			getline(cin, bc.tenBangCap);
 			return;
 		default:
-			cout << "Nhap lai\n";
+			cout << "Nhap lai!!!\n";
 			break;
 		}
 	} while (k != 0);
@@ -846,8 +868,7 @@ void xoaBangCap(NodeBangCap*& dsbc, NodeNhanVien* dsnv)
 		cout << "|3. TOFFEL(TF)									" << "\n";
 		cout << "|4. OTHER...								    " << "\n";
 		cout << "===============================================" << endl;
-		cout << "Nhap lua chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		switch (k)
 		{
 		case 1:
@@ -940,8 +961,7 @@ void QuanLyBangCap(NodeNhanVien* dsnv, NodeBangCap*& dsbc)
 	BangCap bangcap;
 	do {
 		subMenuQLBC();
-		cout << "Nhap lua chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		system("cls");
 		switch (k)
 		{
@@ -1046,8 +1066,7 @@ void QuanLyNhanVien(NodeNhanVien*& dsnv)
 	do {
 		system("cls");
 		subMenuQLNV();
-		cout << "Nhap lua chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		system("cls");
 		switch (k)
 		{
@@ -1402,8 +1421,7 @@ void timKiemTheoMaBang(NodeNhanVien* dsnv)
 		cout << "|3. TOFFEL(TF)									" << "\n";
 		cout << "|4. OTHER...								    " << "\n";
 		cout << "===============================================" << endl;
-		cout << "Nhap lua chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		string maBang;
 		bool flag = false;
 		NodeNhanVien* n = dsnv;
@@ -1474,7 +1492,11 @@ void timKiemTheoMaBang(NodeNhanVien* dsnv)
 					}
 					return;
 				}
-
+				else
+				{
+					cout << "Ban da nhap sai!!!" << endl;
+					return;
+				}
 			}
 			n = n->link;
 		}
@@ -1536,8 +1558,8 @@ void suaThongTinNhanVien(NodeNhanVien*& dsnv, NodeNhanVien* n)
 			system("cls");
 			xuatNhanVien(n);
 			subMenuSua();
-			cout << "Nhap lua chon: ";
-			cin >> k;
+			k = nhapSoNguyen();
+			
 			cin.ignore();
 			switch (k)
 			{
@@ -1636,8 +1658,7 @@ void timKiem(NodeNhanVien*& dsnv)
 	{
 		system("cls");
 		subMenuTimKiem();
-		cout << "Nhap Lua Chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		switch (k)
 		{
 		case 0:
@@ -1714,8 +1735,7 @@ void toHopXoaSuaThemBC(NodeNhanVien*& dsnv, NodeNhanVien* n)
 	int k;
 	do {
 		subMenuXoaSuaThemBC();
-		cout << "Nhap lua chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		system("cls");
 		switch (k)
 		{
@@ -1734,7 +1754,7 @@ void toHopXoaSuaThemBC(NodeNhanVien*& dsnv, NodeNhanVien* n)
 			suaThongTinNhanVien(dsnv, n);
 			break;
 		default:
-			cout << "nhap lai\n ";
+			cout << "Nhap lai!!!\n ";
 			break;
 		}
 	} while (k != 0);
@@ -1843,13 +1863,12 @@ void xoaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n)
 			cout << "===============================================" << endl;
 			cout << "=================MA BANG CAP===================" << endl;
 			cout << "|0. Thoat                                      " << endl;
-			cout << "|1. IS									        " << "\n";
-			cout << "|2. TC									        " << "\n";
-			cout << "|3. TF									        " << "\n";
+			cout << "|1. IELTS(IS)									" << "\n";
+			cout << "|2. TOEIC(TC)									" << "\n";
+			cout << "|3. TOFFEL(TF)									" << "\n";
 			cout << "|4. OTHER...								    " << "\n";
 			cout << "===============================================" << endl;
-			cout << "Nhap lua chon: ";
-			cin >> k;
+			k = nhapSoNguyen();
 			switch (k)
 			{
 			case 0:
@@ -2451,8 +2470,7 @@ void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
 	{
 		system("cls");
 		menuThongKe();
-		cout << "Nhap lua chon: ";
-		cin >> k;
+		k = nhapSoNguyen();
 		switch (k)
 		{ 
 		case 1:
