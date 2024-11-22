@@ -1058,6 +1058,7 @@ void subMenuQLNV()
 	cout << "|1. Them Nhan Vien                            |" << "\n";
 	cout << "|2. Xuat Danh Sach Nhan Vien                  |" << "\n";
 	cout << "|3. Tim Kiem Thong Tin Nhan Vien              |" << "\n";
+	cout << "|4. Sap Xep Nhan Vien                         |" << "\n";
 	cout << "===============================================" << endl;
 }
 void QuanLyNhanVien(NodeNhanVien*& dsnv)
@@ -1081,8 +1082,11 @@ void QuanLyNhanVien(NodeNhanVien*& dsnv)
 		case 3:
 			timKiem(dsnv);
 			break;
+		case 4:
+			SapXep(dsnv);
+			break;
 		default:
-			cout << "nhap lai\n ";
+			cout << " Ban da nhap sai!!!\n ";
 			break;
 		}
 		char check;
@@ -1166,9 +1170,17 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 		buffer[50] = '\0';
 		tmp->user.id = buffer;
 
-		fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
-		buffer[50] = '\0';
-		tmp->user.hoten = buffer;
+		int dodaiten;
+		fscanf_s(fp, "%d", &dodaiten); // Đọc độ dài của họ tên
+		fgetc(fp); // Loại bỏ ký tự xuống dòng sau số (để fgets hoạt động đúng)
+		fgets(buffer, dodaiten + 1, fp); // Đọc chuỗi với độ dài được chỉ định (dodai)
+		buffer[dodaiten] = '\0'; // Đảm bảo kết thúc chuỗi an toàn
+
+		size_t len = strlen(buffer);
+		if (len > 0 && buffer[len - 1] == '\n') {
+			buffer[len - 1] = '\0';
+		}
+		tmp->user.hoten = buffer; // Gán chuỗi cho họ tên
 
 		fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
 		buffer[50] = '\0';
@@ -1181,9 +1193,18 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 		fscanf_s(fp, "%d", &tmp->user.ngayVaoLam.day);
 		fscanf_s(fp, "%d", &tmp->user.ngayVaoLam.month);
 		fscanf_s(fp, "%d", &tmp->user.ngayVaoLam.year);
-		fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
-		buffer[50] = '\0';
-		tmp->user.chucvu = buffer;
+
+		int dodaichucvu;
+		fscanf_s(fp, "%d", &dodaichucvu); // Đọc độ dài của họ tên
+		fgetc(fp); // Loại bỏ ký tự xuống dòng sau số (để fgets hoạt động đúng)
+		fgets(buffer, dodaichucvu + 1, fp); // Đọc chuỗi với độ dài được chỉ định (dodai)
+		buffer[dodaichucvu] = '\0'; // Đảm bảo kết thúc chuỗi an toàn
+
+		size_t lent = strlen(buffer);
+		if (lent > 0 && buffer[lent - 1] == '\n') {
+			buffer[lent - 1] = '\0';
+		}
+		tmp->user.chucvu = buffer; // Gán chuỗi cho họ tên
 
 		int gioitinh;
 		fscanf_s(fp, "%d", &gioitinh);
@@ -1222,30 +1243,24 @@ int writeFile(const char* filename, NodeNhanVien* dsnv)
 	{
 		fprintf_s(fp, "\n");
 		fprintf_s(fp, "%s", p->user.id.c_str());
+		fprintf_s(fp, "\n%d", static_cast<int>(p->user.hoten.length()));
+		fprintf_s(fp, "\n%s", p->user.hoten.c_str());
 
-		//Xoa khoang trang o trong chuoi
-		for (int i = 0; i < p->user.hoten.length(); i++)
-		{
-			if (p->user.hoten[i] == ' ')
-			{
-				p->user.hoten.replace(i, 1, "");
-			}
-		}
-		fprintf_s(fp, "\t%s", p->user.hoten.c_str());
+		fprintf_s(fp, "\n%s", p->user.sdt.c_str());
+		fprintf_s(fp, "\n%s", p->user.cccd.c_str());
+		fprintf_s(fp, "\n%d", p->user.ngayVaoLam.day);
+		fprintf_s(fp, "\n%d", p->user.ngayVaoLam.month);
+		fprintf_s(fp, "\n%d", p->user.ngayVaoLam.year);
 
-		fprintf_s(fp, "\t%s", p->user.sdt.c_str());
-		fprintf_s(fp, "\t%s", p->user.cccd.c_str());
-		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.day);
-		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.month);
-		fprintf_s(fp, "\t%d", p->user.ngayVaoLam.year);
-		fprintf_s(fp, "\t%s", p->user.chucvu.c_str());
-		fprintf_s(fp, "\t%d", p->user.gioitinh);
-		fprintf_s(fp, "\t%d", p->demBC);
+		fprintf_s(fp, "\n%d", static_cast<int>(p->user.chucvu.length()));
+		fprintf_s(fp, "\n%s", p->user.chucvu.c_str());
+		fprintf_s(fp, "\n%d", p->user.gioitinh);
+		fprintf_s(fp, "\n%d", p->demBC);
 		NodeBangCap* tmp = p->listBC;
 		while (tmp != NULL)
 		{
-			fprintf_s(fp, "\t%s", tmp->data.mabang.c_str());
-			fprintf_s(fp, "\t%s", tmp->data.tenBangCap.c_str());
+			fprintf_s(fp, "\n%s", tmp->data.mabang.c_str());
+			fprintf_s(fp, "\n%s", tmp->data.tenBangCap.c_str());
 			tmp = tmp->link;
 		}
 		p = p->link;
@@ -1378,6 +1393,25 @@ void xuatDanhSachChucVu(NodeNhanVien* dsnv)
 
 void chuanHoaChuoi(string& str)
 {
+	//Xu ly khoang trang o dau
+	while (str[0] == ' ')
+	{
+		str.replace(0, 1, "");
+	}
+	//Xu ly khoang trang o giua
+	for (int i = 0; i < str.length() - 1; i++)
+	{
+		if (str[i] == ' ' && str[i + 1] == ' ')
+		{
+			str.replace(i+1, 1, "");
+			i--;
+		}
+	}
+	//Xu ly khoang trang o cuoi
+	while (str[str.length() - 1] == ' ')
+	{
+		str.replace(str.length() - 1, 1, "");
+	}
 	for (int i = 0; i < str.length(); i++)
 	{
 		if (str[i] >= 'A' && str[i] <= 'Z')
@@ -1399,13 +1433,7 @@ void chuanHoaChuoi(string& str)
 			}
 		}
 	}
-	for (int i = 0; i < str.length(); i++)
-	{
-		if (str[i] == ' ')
-		{
-			str.replace(i, 1, "");
-		}
-	}
+
 }
 void timKiemTheoMaBang(NodeNhanVien* dsnv)
 {
@@ -1436,6 +1464,10 @@ void timKiemTheoMaBang(NodeNhanVien* dsnv)
 
 			while (tmp != NULL)
 			{
+				if (k == 0)
+				{
+					return;
+				}
 				if (k == 1)
 				{
 					if (tmp->data.mabang == "IS")
@@ -1683,15 +1715,24 @@ void timKiem(NodeNhanVien*& dsnv)
 					if (k == 'n' || k == 'N')
 						break;
 					cout << "Ban can nhap chinh xac id nhan vien can chinh sua!" << endl;
-					NodeNhanVien tmp;
+					NodeNhanVien* tmp = new NodeNhanVien();
 					cout << "Nhap id: ";
-					cin >> tmp.user.id;
-					for (int i = 0; i < tmp.user.id.length(); i++)
+					cin >> tmp->user.id;
+					for (int i = 0; i < tmp->user.id.length(); i++)
 					{
-						if (tmp.user.id[i] >= 'a' && tmp.user.id[i] <= 'z')
-							tmp.user.id[i] = tmp.user.id[i] - 32;
+						if (tmp->user.id[i] >= 'a' && tmp->user.id[i] <= 'z')
+							tmp->user.id[i] = tmp->user.id[i] - 32;
 					}
-					toHopXoaSuaThemBC(dsnv, &tmp);
+					NodeNhanVien* tmp2 = id;
+					while (tmp2 != NULL)
+					{
+						if (tmp2->user.id == tmp->user.id)
+						{
+							break;
+						}
+						tmp2 = tmp2->link;
+					}
+					toHopXoaSuaThemBC(dsnv, tmp2);
 				}
 			}
 			else
@@ -1706,7 +1747,7 @@ void timKiem(NodeNhanVien*& dsnv)
 			timKiemTheoMaBang(dsnv);
 			break;
 		default:
-			cout << "Nhap lai\n";
+			cout << "Ban da nhap sai!!!\n";
 			break;
 		}
 		char check;
@@ -1754,7 +1795,7 @@ void toHopXoaSuaThemBC(NodeNhanVien*& dsnv, NodeNhanVien* n)
 			suaThongTinNhanVien(dsnv, n);
 			break;
 		default:
-			cout << "Nhap lai!!!\n ";
+			cout << "Ban da nhap sai!!!\n ";
 			break;
 		}
 	} while (k != 0);
@@ -2492,6 +2533,7 @@ void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
 			xuatSoNgayDaLamViec(dsnv);
 			break;
 		default:
+			cout << "Ban da nhap sai!!!" << endl;
 			break;
 		}
 		char check;
@@ -2500,4 +2542,220 @@ void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
 		if (check == 'n' || check == 'N')
 			break;
 	} while (k != 0);
+}
+
+//Cac ham cai dat cua sap xep
+void menuSapXep()
+{
+	cout << "===========================================" << endl;
+	cout << "================MENU SAP XEP===============" << endl;
+	cout << "|0. Thoat                                 |" << endl;
+	cout << "|1. Sap Xep ID Nhan Vien Tang Dan         |" << endl;
+	cout << "|2. Sap Xep ID Nhan Vien Giam Dan         |" << endl;
+	cout << "|3. Sap Xep HoTen Nhan Vien Tang Dan      |" << endl;
+	cout << "|4. Sap Xep HoTen Nhan Vien Giam Dan      |" << endl;
+	cout << "===========================================" << endl;
+}
+void SapXep(NodeNhanVien*& dsnv)
+{
+	int k;
+	do
+	{
+		system("cls");
+		xuatDSNhanVien(dsnv);
+		menuSapXep();
+		k = nhapSoNguyen();
+		switch (k)
+		{
+		case 0:
+			break;
+		case 1:
+			sapXepIDTangDan(dsnv);
+			break;
+		case 2:
+			sapXepIdGiamDan(dsnv);
+			break;
+		case 3:
+			sapXepHoTenTangDan(dsnv);
+			break;
+		case 4:
+			sapXepHoTenGiamDan(dsnv);
+			break;
+		default:
+			cout << "Ban da nhap sai lua chon!!!" << endl;
+			break;
+		}
+	} while (k != 0);
+}
+void sapXepIDTangDan(NodeNhanVien*& dsnv)
+{
+	if (dsnv == NULL || dsnv->link == NULL)
+	{
+		cout << "Danh sach trong hoac chi co 1 phan tu khong can sap xep!!" << endl;
+		return;
+	}
+
+	bool check; // Biến kiểm tra xem có cần hoán đổi nữa không
+	do
+	{
+		check = false;
+		NodeNhanVien* head = dsnv;
+		NodeNhanVien* prev = NULL;
+
+		while (head != NULL)
+		{
+			if (head->link != NULL)
+			{
+				if (head->user.id > head->link->user.id)
+				{
+					// Hoán đổi hai nút liền kề
+					NodeNhanVien* tmp = head->link;
+					head->link = tmp->link;
+					tmp->link = head;
+
+					if (prev == NULL)
+					{
+						dsnv = tmp; // Cập nhật đầu danh sách nếu nút đầu tiên thay đổi
+					}
+					else
+					{
+						prev->link = tmp;
+					}
+
+					check = true;
+				}
+			}
+			prev = head;
+			head = head->link;
+		}
+	} while (check);
+}
+void sapXepIdGiamDan(NodeNhanVien*& dsnv)
+{
+	if (dsnv == NULL || dsnv->link == NULL)
+	{
+		cout << "Danh sach trong hoac chi co 1 phan tu khong can sap xep!!" << endl;
+		return;
+	}
+
+	bool check; // Biến kiểm tra xem có cần hoán đổi nữa không
+	do
+	{
+		check = false;
+		NodeNhanVien* head = dsnv;
+		NodeNhanVien* prev = NULL;
+
+		while (head != NULL)
+		{
+			if (head->link != NULL)
+			{
+				if (head->user.id < head->link->user.id)
+				{
+					// Hoán đổi hai nút liền kề
+					NodeNhanVien* tmp = head->link;
+					head->link = tmp->link;
+					tmp->link = head;
+
+					if (prev == NULL)
+					{
+						dsnv = tmp; // Cập nhật đầu danh sách nếu nút đầu tiên thay đổi
+					}
+					else
+					{
+						prev->link = tmp;
+					}
+
+					check = true;
+				}
+			}
+			prev = head;
+			head = head->link;
+		}
+	} while (check);
+}
+void sapXepHoTenTangDan(NodeNhanVien*& dsnv)
+{
+	if (dsnv == NULL || dsnv->link == NULL)
+	{
+		cout << "Danh sach trong hoac chi co 1 phan tu khong can sap xep!!" << endl;
+		return;
+	}
+
+	bool check; // Biến kiểm tra xem có cần hoán đổi nữa không
+	do
+	{
+		check = false;
+		NodeNhanVien* head = dsnv;
+		NodeNhanVien* prev = NULL;
+
+		while (head != NULL)
+		{
+			if (head->link != NULL)
+			{
+				if (head->user.hoten > head->link->user.hoten)
+				{
+					// Hoán đổi hai nút liền kề
+					NodeNhanVien* tmp = head->link;
+					head->link = tmp->link;
+					tmp->link = head;
+
+					if (prev == NULL)
+					{
+						dsnv = tmp; // Cập nhật đầu danh sách nếu nút đầu tiên thay đổi
+					}
+					else
+					{
+						prev->link = tmp;
+					}
+
+					check = true;
+				}
+			}
+			prev = head;
+			head = head->link;
+		}
+	} while (check);
+}
+void sapXepHoTenGiamDan(NodeNhanVien*& dsnv)
+{
+	if (dsnv == NULL || dsnv->link == NULL)
+	{
+		cout << "Danh sach trong hoac chi co 1 phan tu khong can sap xep!!" << endl;
+		return;
+	}
+
+	bool check; // Biến kiểm tra xem có cần hoán đổi nữa không
+	do
+	{
+		check = false;
+		NodeNhanVien* head = dsnv;
+		NodeNhanVien* prev = NULL;
+
+		while (head != NULL)
+		{
+			if (head->link != NULL)
+			{
+				if (head->user.hoten < head->link->user.hoten)
+				{
+					// Hoán đổi hai nút liền kề
+					NodeNhanVien* tmp = head->link;
+					head->link = tmp->link;
+					tmp->link = head;
+
+					if (prev == NULL)
+					{
+						dsnv = tmp; // Cập nhật đầu danh sách nếu nút đầu tiên thay đổi
+					}
+					else
+					{
+						prev->link = tmp;
+					}
+
+					check = true;
+				}
+			}
+			prev = head;
+			head = head->link;
+		}
+	} while (check);
 }
