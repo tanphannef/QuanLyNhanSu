@@ -197,3 +197,11 @@ void demSoLuongBangCapCuaMoiNhanVien(NodeNhanVien* dsnv);
 int tinhSoNgayDaLamViec(int ngay, int thang, int nam);
 void xuatSoNgayDaLamViec(NodeNhanVien* dsnv);
 int nhapSoNguyen();
+
+//Cac ham sap xep
+void menuSapXep();
+void SapXep(NodeNhanVien*& dsnv);
+void sapXepIDTangDan(NodeNhanVien*& dsnv);
+void sapXepIdGiamDan(NodeNhanVien*& dsnv);
+void sapXepHoTenTangDan(NodeNhanVien*& dsnv);
+void sapXepHoTenGiamDan(NodeNhanVien*& dsnv);
