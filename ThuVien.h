@@ -186,7 +186,6 @@ void xoaBangCap(NodeBangCap*& dsbc, NodeNhanVien* dsnv);
 void subMenuQLNV();
 void QuanLyNhanVien(NodeNhanVien*& dsnv);
 
-void menuThongKe();
 void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc);
 
 //Cac ham dem
