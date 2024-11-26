@@ -23,7 +23,11 @@ int main()
             switch (a)
             {
             case 0://thoat
-                break;
+                if (writeFile("danhSachNhanVien.txt", dsnv) && writeFile("danhSachBangCap.txt", dsbc))
+                {
+                    return 0;
+                }
+                return 0;
             case 1:
                 QuanLyNhanVien(dsnv);
                 break;
@@ -35,7 +39,7 @@ int main()
                 thongKe(dsnv, dsbc);
                 break;
             default:
-                cout << "Ban da lua chon sai!" << endl;
+                cout << "\033[31mBan da lua chon sai!\033[0m" << endl;
                 break;
             }
             char check;
@@ -50,7 +54,7 @@ int main()
     }
     else
     {
-        cout << "Doc file that bai!" << endl;
+        cout << "\033[31mDoc file that bai!\033[0m" << endl;
     }
     if (writeFile("danhSachNhanVien.txt", dsnv) && writeFile("danhSachBangCap.txt", dsbc))
     {
