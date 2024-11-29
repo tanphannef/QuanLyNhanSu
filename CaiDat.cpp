@@ -282,6 +282,10 @@ void nhapUser(NodeNhanVien* dsnv, User& user)
 		{
 			cout << "\033[31mNhap id khong chinh xac vui long nhap lai!\033[0m" << endl;
 		}
+		else if (!checkNumeric(id.substr(2, id.length())))
+		{
+			cout<<"\033[31mNhap id khong chinh xac vui long nhap lai!\033[0m" << endl;
+		}
 		else if (id.length() < 5 || id.length() > 5)
 		{
 			cout << "\033[31mDo dai phai la 5 ky tu!\033[0m" << endl;
