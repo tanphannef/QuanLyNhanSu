@@ -1743,7 +1743,7 @@ void timKiem(NodeNhanVien*& dsnv)
 				}
 				if(demSoLuongNhanVien(id) == 1)
 					toHopXoaSuaThemBC(dsnv, id);
-				else
+				else if(demSoLuongNhanVien(id) > 1)
 				{
 					char k;
 					cout << "Ban co muon chinh sua nhan vien khong(y/n): ";
@@ -1769,6 +1769,10 @@ void timKiem(NodeNhanVien*& dsnv)
 						tmp2 = tmp2->link;
 					}
 					toHopXoaSuaThemBC(dsnv, tmp2);
+				}
+				else
+				{
+					cout << "\033[31mKhong tim thay nhan vien!\033[0m" << endl;
 				}
 			}
 			else
