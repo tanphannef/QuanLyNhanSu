@@ -1743,7 +1743,7 @@ void timKiem(NodeNhanVien*& dsnv)
 				}
 				if(demSoLuongNhanVien(id) == 1)
 					toHopXoaSuaThemBC(dsnv, id);
-				else if(demSoLuongNhanVien(id) > 1)
+				else
 				{
 					char k;
 					cout << "Ban co muon chinh sua nhan vien khong(y/n): ";
@@ -1762,17 +1762,20 @@ void timKiem(NodeNhanVien*& dsnv)
 					NodeNhanVien* tmp2 = id;
 					while (tmp2 != NULL)
 					{
-						if (tmp2->user.id == tmp->user.id)
+						if (tmp2->user.id.find(tmp->user.id) != string::npos)
 						{
 							break;
 						}
 						tmp2 = tmp2->link;
 					}
-					toHopXoaSuaThemBC(dsnv, tmp2);
-				}
-				else
-				{
-					cout << "\033[31mKhong tim thay nhan vien!\033[0m" << endl;
+					if (tmp2 != NULL)
+					{
+						toHopXoaSuaThemBC(dsnv, tmp2);
+					}
+					else
+					{
+						cout << "\033[31mKhong tim thay nhan vien!\033[0m" << endl;
+					}
 				}
 			}
 			else
