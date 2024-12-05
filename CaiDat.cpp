@@ -2567,12 +2567,12 @@ void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
 		system("cls");
 		cout << "======================THONG KE=======================" << endl;
 		cout << "|0. Thoat                                           |" << endl;
-		cout << "|1. So luong nhan vien dang quan ly la: "<<soLuongNhanVien<<"          |" << endl;
-		cout << "|2. So luong bang cap dang quan ly la: "<<soLuongBangCap<<"            |" << endl;
-		cout << "|3. So luong nhan vien nam la: "<<nam<<"                   | " << endl;
-		cout << "|4. So luong nhan vien nu la: "<<nu<<"                     | " << endl;
-		cout << "|5. Xem so luong bang cap cua moi nhan vien         |" << endl;
-		cout << "|6. Xem so ngay da lam viec cua moi nhan vien       |" << endl;
+		cout << "|So luong nhan vien dang quan ly la: "<<soLuongNhanVien<<"             |" << endl;
+		cout << "|So luong bang cap dang quan ly la: "<<soLuongBangCap<<"               |" << endl;
+		cout << "|So luong nhan vien nam la: "<<nam<<"                      | " << endl;
+		cout << "|So luong nhan vien nu la: "<<nu<<"                        | " << endl;
+		cout << "|1. Xem so luong bang cap cua moi nhan vien         |" << endl;
+		cout << "|2. Xem so ngay da lam viec cua moi nhan vien       |" << endl;
 		cout << "=====================================================" << endl;
 		k = nhapSoNguyen();
 		switch (k)
@@ -2580,15 +2580,9 @@ void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
 		case 0:
 			return;
 		case 1:
-		case 2:
-		case 3:
-		case 4:
-			cout << "\033[31mDa duoc thong ke !!!\033[0m" << endl;
-			break;
-		case 5:
 			demSoLuongBangCapCuaMoiNhanVien(dsnv);
 			break;
-		case 6:
+		case 2:
 			xuatSoNgayDaLamViec(dsnv);
 			break;
 		default:
