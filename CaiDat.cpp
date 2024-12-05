@@ -512,17 +512,14 @@ void nhapBangCap(BangCap& bc)
 	case 1:
 		bc.mabang = "IS";
 		bc.tenBangCap = "IELTS";
-		cout << "Ban da them thanh cong!" << endl;
 		return;
 	case 2:
 		bc.mabang = "TC";
 		bc.tenBangCap = "TOEIC";
-		cout << "Ban da them thanh cong!" << endl;
 		return;
 	case 3:
 		bc.mabang = "TF";
 		bc.tenBangCap = "TOFFEL";
-		cout << "Ban da them thanh cong!" << endl;
 		return;
 	case 4:
 		cin.ignore();
@@ -530,14 +527,14 @@ void nhapBangCap(BangCap& bc)
 		getline(cin, bc.mabang);
 		for (int i = 0; i < bc.mabang.length(); i++)
 		{
-			if (bc.mabang[i] == 'a' && bc.mabang[i] == 'z')
+			if (bc.mabang[i] >= 'a' && bc.mabang[i] <= 'z')
 			{
 				bc.mabang[i] -= 32;
 			}
 		}
 		cout << "Nhap ten bang cap: ";
 		getline(cin, bc.tenBangCap);
-		cout << "Ban da them thanh cong!" << endl;
+		chuanHoaChuoi(bc.tenBangCap);
 		return;
 	default:
 		cout << "\033[31mBan da nhap sai!!!\033[0m\n";
@@ -850,7 +847,7 @@ bool checkNhanVienSoHuuBangCap(NodeNhanVien* dsnv, string mabang)
 		NodeBangCap* bc = head->listBC;
 		while (bc != NULL)
 		{
-			if (bc->data.mabang == mabang)
+			if (bc->data.mabang.find(mabang) != string::npos)
 			{
 				return true;
 			}
@@ -911,7 +908,7 @@ void xoaBangCap(NodeBangCap*& dsbc, NodeNhanVien* dsnv)
 			NodeBangCap* head = dsbc;
 			while (head != NULL)
 			{
-				if (head->data.mabang == mabang)
+				if (head->data.mabang.find(mabang) != string::npos)
 				{
 					break;
 				}
@@ -1168,10 +1165,17 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 	}
 	int dem;
 	fscanf_s(fp, "%d", &dem);
+
+	//Neu dem so luong nv bang 0 thi dung luon
+	if (dem == 0) return 0;
+
+	//cho duyen qua so luong nhan vien
 	for (int i = 0; i < dem; i++)
 	{
 		NodeNhanVien* tmp = new NodeNhanVien();
-		char buffer[51];
+		char buffer[52];
+
+
 		fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
 		buffer[50] = '\0';
 		tmp->user.id = buffer;
@@ -1201,7 +1205,7 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 		fscanf_s(fp, "%d", &tmp->user.ngayVaoLam.year);
 
 		int dodaichucvu;
-		fscanf_s(fp, "%d", &dodaichucvu); // Đọc độ dài của họ tên
+		fscanf_s(fp, "%d", &dodaichucvu); // Đọc độ dài của chuc vu
 		fgetc(fp); // Loại bỏ ký tự xuống dòng sau số (để fgets hoạt động đúng)
 		fgets(buffer, dodaichucvu + 1, fp); // Đọc chuỗi với độ dài được chỉ định (dodai)
 		buffer[dodaichucvu] = '\0'; // Đảm bảo kết thúc chuỗi an toàn
@@ -1210,7 +1214,7 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 		if (lent > 0 && buffer[lent - 1] == '\n') {
 			buffer[lent - 1] = '\0';
 		}
-		tmp->user.chucvu = buffer; // Gán chuỗi cho họ tên
+		tmp->user.chucvu = buffer; // Gán chuỗi cho chuc vu
 
 		int gioitinh;
 		fscanf_s(fp, "%d", &gioitinh);
@@ -1223,9 +1227,17 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 			buffer[50] = '\0';
 			bc->data.mabang = buffer;
 
-			fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
-			buffer[50] = '\0';
-			bc->data.tenBangCap = buffer;
+			int dodaibangcap;
+			fscanf_s(fp, "%d", &dodaibangcap); // Đọc độ dài của họ tên
+			fgetc(fp); // Loại bỏ ký tự xuống dòng sau số (để fgets hoạt động đúng)
+			fgets(buffer, dodaibangcap + 1, fp); // Đọc chuỗi với độ dài được chỉ định (dodai)
+			buffer[dodaibangcap] = '\0'; // Đảm bảo kết thúc chuỗi an toàn
+
+			size_t len = strlen(buffer);
+			if (len > 0 && buffer[len - 1] == '\n') {
+				buffer[len - 1] = '\0';
+			}
+			bc->data.tenBangCap = buffer; // Gán chuỗi cho họ tên
 
 			bc->link = tmp->listBC;
 			tmp->listBC = bc;
@@ -1235,6 +1247,7 @@ int readFile(const char* filename, NodeNhanVien*& dsnv)
 	fclose(fp);
 	return 1;
 }
+
 int writeFile(const char* filename, NodeNhanVien* dsnv)
 {
 	FILE* fp;
@@ -1266,6 +1279,7 @@ int writeFile(const char* filename, NodeNhanVien* dsnv)
 		while (tmp != NULL)
 		{
 			fprintf_s(fp, "\n%s", tmp->data.mabang.c_str());
+			fprintf_s(fp, "\n%d", static_cast<int>(tmp->data.tenBangCap.length()));
 			fprintf_s(fp, "\n%s", tmp->data.tenBangCap.c_str());
 			tmp = tmp->link;
 		}
@@ -1927,7 +1941,7 @@ void xoaBangCap(NodeNhanVien*& dsnv, NodeNhanVien* n)
 	NodeNhanVien* tmp = dsnv;
 	while (tmp != NULL)
 	{
-		if (tmp->user.id == n->user.id)
+		if (tmp->user.id.find(n->user.id) != string::npos)
 		{
 			break;
 		}
@@ -2065,9 +2079,17 @@ int readFile(const char* filename, NodeBangCap*& dsbc)
 		buffer[50] = '\0';
 		tmp->data.mabang = buffer;
 
-		fscanf_s(fp, "%50s", buffer, (unsigned)_countof(buffer));
-		buffer[50] = '\0';
-		tmp->data.tenBangCap = buffer;
+		int dodaibangcap;
+		fscanf_s(fp, "%d", &dodaibangcap); // Đọc độ dài của họ tên
+		fgetc(fp); // Loại bỏ ký tự xuống dòng sau số (để fgets hoạt động đúng)
+		fgets(buffer, dodaibangcap + 1, fp); // Đọc chuỗi với độ dài được chỉ định (dodai)
+		buffer[dodaibangcap] = '\0'; // Đảm bảo kết thúc chuỗi an toàn
+
+		size_t len = strlen(buffer);
+		if (len > 0 && buffer[len - 1] == '\n') {
+			buffer[len - 1] = '\0';
+		}
+		tmp->data.tenBangCap = buffer; // Gán chuỗi cho họ tên
 		themBC(dsbc, tmp);
 	}
 	fclose(fp);
@@ -2087,7 +2109,8 @@ int writeFile(const char* filename, NodeBangCap* dsbc)
 	{
 		fprintf_s(fp, "\n");
 		fprintf_s(fp, "%s", n->data.mabang.c_str());
-		fprintf_s(fp, "\t%s", n->data.tenBangCap.c_str());
+		fprintf_s(fp, "\n%d", static_cast<int>(n->data.tenBangCap.length()));
+		fprintf_s(fp, "\n%s", n->data.tenBangCap.c_str());
 		n = n->link;
 	}
 	fclose(fp);
@@ -2544,9 +2567,9 @@ void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
 		system("cls");
 		cout << "======================THONG KE=======================" << endl;
 		cout << "|0. Thoat                                           |" << endl;
-		cout << "|1. So luong nhan vien dang quan ly la: "<<soLuongNhanVien<<"           |" << endl;
+		cout << "|1. So luong nhan vien dang quan ly la: "<<soLuongNhanVien<<"          |" << endl;
 		cout << "|2. So luong bang cap dang quan ly la: "<<soLuongBangCap<<"            |" << endl;
-		cout << "|3. So luong nhan vien nam la: "<<nam<<"                    | " << endl;
+		cout << "|3. So luong nhan vien nam la: "<<nam<<"                   | " << endl;
 		cout << "|4. So luong nhan vien nu la: "<<nu<<"                     | " << endl;
 		cout << "|5. Xem so luong bang cap cua moi nhan vien         |" << endl;
 		cout << "|6. Xem so ngay da lam viec cua moi nhan vien       |" << endl;
@@ -2556,6 +2579,12 @@ void thongKe(NodeNhanVien* dsnv, NodeBangCap* dsbc)
 		{ 
 		case 0:
 			return;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			cout << "\033[31mDa duoc thong ke !!!\033[0m" << endl;
+			break;
 		case 5:
 			demSoLuongBangCapCuaMoiNhanVien(dsnv);
 			break;
