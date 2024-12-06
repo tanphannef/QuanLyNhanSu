@@ -2607,6 +2607,8 @@ void menuSapXep()
 	cout << "|2. Sap Xep ID Nhan Vien Giam Dan         |" << endl;
 	cout << "|3. Sap Xep HoTen Nhan Vien Tang Dan      |" << endl;
 	cout << "|4. Sap Xep HoTen Nhan Vien Giam Dan      |" << endl;
+	cout << "|5. Sap Xep ChucVu Nhan Vien Tang Dan     |" << endl;
+	cout << "|6. Sap Xep ChucVu Nhan Vien Giam Dan     |" << endl;
 	cout << "===========================================" << endl;
 }
 void SapXep(NodeNhanVien*& dsnv)
@@ -2633,6 +2635,12 @@ void SapXep(NodeNhanVien*& dsnv)
 			break;
 		case 4:
 			sapXepHoTenGiamDan(dsnv);
+			break;
+		case 5:
+			sapXepChucVuTangDan(dsnv);
+			break;
+		case 6:
+			sapXepChucVuGiamDan(dsnv);
 			break;
 		default:
 			cout << "Ban da nhap sai lua chon!!!" << endl;
@@ -2788,6 +2796,87 @@ void sapXepHoTenGiamDan(NodeNhanVien*& dsnv)
 			if (head->link != NULL)
 			{
 				if (head->user.hoten < head->link->user.hoten)
+				{
+					NodeNhanVien* tmp = head->link;
+					head->link = tmp->link;
+					tmp->link = head;
+					if (prev == NULL)
+					{
+						dsnv = tmp;
+					}
+					else
+					{
+						prev->link = tmp;
+					}
+					check = true;
+				}
+			}
+			prev = head;
+			head = head->link;
+		}
+	} while (check);
+}
+
+void sapXepChucVuTangDan(NodeNhanVien*& dsnv)
+{
+	if (dsnv == NULL || dsnv->link == NULL)
+	{
+		cout << "Danh sach trong hoac chi co 1 phan tu khong can sap xep!!!" << endl;
+		return;
+	}
+	bool check;
+	do
+	{
+		check = false;
+		NodeNhanVien* head = dsnv;
+		NodeNhanVien* prev = NULL;
+
+		while (head != NULL)
+		{
+			if (head->link != NULL)
+			{
+				if (head->user.chucvu > head->link->user.chucvu)
+				{
+					NodeNhanVien* tmp = head->link;
+					head->link = tmp->link;
+					tmp->link = head;
+					if (prev == NULL)
+					{
+						dsnv = tmp;
+					}
+					else
+					{
+						prev->link = tmp;
+					}
+					check = true;
+				}
+			}
+			prev = head;
+			head = head->link;
+		}
+	} while (check);
+
+}
+
+void sapXepChucVuGiamDan(NodeNhanVien*& dsnv)
+{
+	if (dsnv == NULL || dsnv->link == NULL)
+	{
+		cout << "Danh sach trong hoac chi co 1 phan tu khong can sap xep!!!" << endl;
+		return;
+	}
+	bool check;
+	do
+	{
+		check = false;
+		NodeNhanVien* head = dsnv;
+		NodeNhanVien* prev = NULL;
+
+		while (head != NULL)
+		{
+			if (head->link != NULL)
+			{
+				if (head->user.chucvu < head->link->user.chucvu)
 				{
 					NodeNhanVien* tmp = head->link;
 					head->link = tmp->link;
